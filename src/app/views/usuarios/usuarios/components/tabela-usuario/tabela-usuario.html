@@ -1,0 +1,40 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Usuário</th>
+      <th scope="col">Cargo</th>
+      <th scope="col">Status</th>
+      <th scope="col">Data Criação</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (user of list_usuarios; track $index) {
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.nome }}</td>
+            <td>{{ user.usuario }}</td>
+            <td>{{ user.cargo }}</td>
+            <td>
+                @if(user.status){
+                    Ativo
+                }
+                @else{
+                    Inativo
+                }
+            </td>
+            <td>{{ user.data_criacao }}</td>
+            <td class="text-end">
+                <button type="button" class="btn btn-outline-warning">
+                    <i class="fa-solid fa-pen-to-square m-0"></i>
+                </button>
+                <button type="button" class="btn btn-outline-danger">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    }
+  </tbody>
+</table>
