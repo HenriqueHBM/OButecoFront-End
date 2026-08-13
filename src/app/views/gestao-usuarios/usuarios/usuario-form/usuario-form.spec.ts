@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExcluirUsuario } from './excluir-usuario';
+import { UsuarioForm } from './usuario-form';
 
-describe('ExcluirUsuario', () => {
-  let component: ExcluirUsuario;
-  let fixture: ComponentFixture<ExcluirUsuario>;
+describe('UsuarioForm', () => {
+  let component: UsuarioForm;
+  let fixture: ComponentFixture<UsuarioForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExcluirUsuario],
+      imports: [UsuarioForm],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ExcluirUsuario);
+    fixture = TestBed.createComponent(UsuarioForm);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
