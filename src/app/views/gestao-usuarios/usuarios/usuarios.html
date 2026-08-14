@@ -1,14 +1,27 @@
-<div class="compainer p-5" >
-    <div class="row justify-content-between">
-        <div class="col-md-4 fs-3">
-            Usuários
-        </div>
-        <div class="col-md-1" (click)="openCadastrar()">
-            <button class="btn btn-success">
-                Cadastrar
-            </button>
-        </div>
+<div class="compainer p-5">
+  <div class="row justify-content-end">
+    <div class="col-md-1 text-end">
+      <button class="btn btn-dark" (click)="backCliked()">
+        <i class="fa-solid fa-caret-left"></i> Voltar
+      </button>
     </div>
-    <br>
+  </div>
+  <br />
+  <div class="card card-body">
+    <div class="row">
+      <div class="col-md-5 d-flex flex-column">
+        <span class="fs-3"> Usuários </span>
+        <span class="text-muted text-break"> Tela para controle dos usuários ao sistema </span>
+      </div>
+      <div class="col md-6 d-flex justify-content-end text-end align-items-center">
+        <button class="btn btn-success" (click)="openCadastrar()">
+          <i class="fa-solid fa-plus"></i> Cadastrar
+        </button>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="card card-body">
     <app-usuario-table></app-usuario-table>
+  </div>
 </div>

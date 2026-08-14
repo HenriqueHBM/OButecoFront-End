@@ -4,6 +4,6 @@ export class Usuario {
     usuario      !: string;
     senha        !: string;
     cargo        !: string;
-    data_criacao !: Date;
+    data_criacao !: string;
     status       !: boolean
 }
