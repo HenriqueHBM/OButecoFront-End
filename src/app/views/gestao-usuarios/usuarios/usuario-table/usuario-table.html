@@ -1,4 +1,4 @@
-<table class="table align-middle">
+<table class="table align-middle table-striped table-hover">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -19,24 +19,27 @@
             <td>{{ user.cargo }}</td>
             <td>
                 @if(user.status){
-                    <span class="badge badge-success rounded-pill">
+                    <span class="badge badge-success rounded-pill p-2 px-3">
                         Ativo
                     </span>
                 }
                 @else{
-                    <span class="badge badge-danger rounded-pill">
+                    <span class="badge badge-danger rounded-pill p-2 px-3">
                         Inativo
                     </span>
                 }
             </td>
             <td>{{ user.data_criacao }}</td>
-            <td class="text-end">
-                <button type="button" class="btn btn-outline-warning">
-                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                </button>
-                <button type="button" class="btn btn-outline-danger">
-                    <i class="fa-solid fa-trash fa-lg"></i>
-                </button>
+            <td class="text-end ">
+                <div class="d-flex align-items-center justify-content-end">
+                    <button type="button" class="btn text-warning shadow-0" (click)="openEditar()">
+                        <i class="fa-solid fa-pencil fa-xl"></i>
+                    </button>
+                    
+                    <button type="button" class="btn text-{{ user.status ? 'danger' : 'success' }} shadow-0">
+                        <i class="fa-solid fa-toggle-{{ user.status ? 'on' : 'off' }} fa-2x"></i>
+                    </button>
+                </div>
             </td>
         </tr>
     }
