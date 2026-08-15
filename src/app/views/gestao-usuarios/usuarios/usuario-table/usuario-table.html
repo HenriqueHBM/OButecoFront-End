@@ -10,7 +10,7 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody>   
     @for (user of list_usuarios; track $index) {
         <tr>
             <td>{{ user.id }}</td>
@@ -32,11 +32,12 @@
             <td>{{ user.data_criacao }}</td>
             <td class="text-end ">
                 <div class="d-flex align-items-center justify-content-end">
-                    <button type="button" class="btn text-warning shadow-0" (click)="openEditar()">
+                    <button type="button" class="btn text-warning shadow-0" (click)="openEditar(user.id)">
                         <i class="fa-solid fa-pencil fa-xl"></i>
                     </button>
                     
-                    <button type="button" class="btn text-{{ user.status ? 'danger' : 'success' }} shadow-0">
+                    <button type="button" (click)="changeStatus(user)"
+                        class="btn text-{{ user.status ? 'success' : 'danger' }} shadow-0">
                         <i class="fa-solid fa-toggle-{{ user.status ? 'on' : 'off' }} fa-2x"></i>
                     </button>
                 </div>
