@@ -9,36 +9,29 @@ import { UsuarioForm } from '../usuario-form/usuario-form';
   templateUrl: './usuario-table.html',
   styleUrl: './usuario-table.scss',
 })
+
+
 export class UsuarioTable {
-    list_usuarios: Usuario[] = [];
-    modalRef : MdbModalRef<UsuarioForm> | null = null;
+  modalRef: MdbModalRef<UsuarioForm> | null = null;
+  
+  list_usuarios: Usuario[] = JSON.parse(localStorage.getItem("lista_usuarios") ?? "[]");
+  
+  constructor(
+    private modalService: MdbModalService
+  ) { }
 
-    constructor(
-      private modalService: MdbModalService
-    ) {
+  openEditar(id: number) {
+    this.modalRef = this.modalService.open(UsuarioForm, {
+      modalClass: 'modal-lg',
+      data: {
+        usuario: this.list_usuarios[id - 1]
+      }
+    });
+  }
 
-      let u1 = new Usuario();
-      u1.id = 1;
-      u1.nome = "Henrique";
-      u1.cargo = "Admin";
-      u1.usuario = "henrique.madeira";
-      u1.data_criacao = new Date('2026-06-02').toLocaleDateString('pt-br');
-      u1.status = true;
-      this.list_usuarios.push(u1);
-
-      let u2 = new Usuario();
-      u2.id = 2;
-      u2.nome = "Daniela";
-      u2.cargo = "Funcionário";
-      u2.usuario = "espindola.moreira";
-      u2.data_criacao = new Date('2026-08-02').toLocaleDateString('pt-br');
-      u2.status = false;
-      this.list_usuarios.push(u2);
+  changeStatus(usuario: Usuario) {
+    if (confirm(`Deseja mesmo ${usuario.status ? "Inativar" : "Ativar"} eses usuário?`)) {
+      this.list_usuarios[usuario.id - 1].status = !usuario.status;
     }
-
-    openEditar(){
-        this.modalRef = this.modalService.open(UsuarioForm,{
-          modalClass: 'modal-lg'
-        });
-    }
+  }
 }
