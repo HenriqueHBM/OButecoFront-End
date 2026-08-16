@@ -14,5 +14,8 @@ export const routes: Routes = [
         // children: [
         //     {path: "usuarios/"}
         // ]
-    }
+    },
+    {path: "home", component: Home, children: [
+      {path: "gestao_usuarios", component: Usuarios, },
+    ]}
 ];
