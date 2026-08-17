@@ -1,4 +1,8 @@
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
@@ -12,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     provideAnimationsAsync(),
-    importProvidersFrom(MdbModalModule)
+    importProvidersFrom(MdbModalModule),
+    provideAnimations(),
   ],
 };
