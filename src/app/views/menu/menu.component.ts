@@ -5,8 +5,8 @@ import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 @Component({
   selector: 'app-menu',
   imports: [MdbCollapseModule],
-  templateUrl: './menu.html',
-  styleUrl: './menu.scss'
+  templateUrl: './menu.component.html',
+  styleUrl: './menu.component.scss'
 })
 export class MenuComponent {
 

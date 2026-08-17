@@ -1,0 +1,21 @@
+.home-container {
+  min-height: 100vh;
+  background:#FFF4CE 50%;
+  display: flex;
+  align-items: center;
+}
+.home-container .row {
+  width: 100%;
+}
+.home-container .card {
+  margin: 0 auto;
+  max-width: 400px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+.home-container .card img {
+  width: 100%;
+}
+.home-container .card-body {
+  text-align: center;
+}

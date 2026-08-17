@@ -1,29 +1,18 @@
-.row{
-  justify-content: end;
+.login-container {
+  min-height: 100vh;
+  padding: 10vh;
+  margin: 0;
+  background: linear-gradient(to right,#FFC40C 50%,#FFF4CE 50%);
+  align-items: center;
 }
 
-.card{
-  background-color: #FFF4CE;
-}
-.mdb-form-control{
-  outline: none;
-box-shadow: none;
+.formulario {
+  width: 100%;
+  max-width: 400px;
 }
 
-.form-control {
-  color: white !important;
-}
+.formulario button {
+  display: block;
+  margin: 3vh auto;
 
-.form-label {
-  color: white !important;
-}
-.topo{
-  top: 40vh;
-  position: relative;
-
-
-}
-.contaianer{
-  display: flex;
-  justify-content: right;
 }

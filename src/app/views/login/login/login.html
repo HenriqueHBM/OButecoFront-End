@@ -1,30 +1,22 @@
-<div class="container">
+<div class="row login-container">
 
-  <div class="row">
+  <div class="col-lg-8 texto">
+    <h1>O buteco</h1>
+  </div>
+  <div class="col-lg-4 formulario-container">
+    <div class="formulario">
+      <mdb-form-control>
+        <input mdbInput type="text" id="usuario" class="form-control" [(ngModel)]="usuario"/>
+        <label mdbLabel class="form-label" for="usuario">Usuário</label>
+      </mdb-form-control>
+      <br>
 
-    <div class="col-lg-4"></div>
+      <mdb-form-control>
+        <input mdbInput type="password" id="senha" class="form-control" [(ngModel)]="senha"/>
+        <label mdbLabel class="form-label" for="senha">Senha</label>
+      </mdb-form-control>
 
-    <div class="col-lg-4 centralizar topo">
-      <div class="card">
-        <div class="card-body">
-          <mdb-form-control>
-            <input mdbInput type="text" id="usuario" class="form-control" />
-            <label mdbLabel class="form-label" for="usuario">Usuário</label>
-          </mdb-form-control>
-          <br>
-
-          <mdb-form-control>
-            <input mdbInput type="pasdsword" id="senha" class="form-control" />
-            <label mdbLabel class="form-label" for="senha">Senha</label>
-          </mdb-form-control>
-          <br>
-
-          <button type="button" class="btn btn-primary btn-rounded" mdbRipple>Acassar</button>
-        </div>
-        <div class="col-lg-4"></div>
-
-      </div>
+      <button type="button" class="btn btn-dark btn-rounded" mdbRipple (click)="logar()">ACESSAR</button>
     </div>
-
   </div>
 </div>
