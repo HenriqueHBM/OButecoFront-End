@@ -1,0 +1,27 @@
+.home-container {
+  min-height: 100vh;
+  background:#FFF4CE 50%;
+  display: flex;
+  align-items: center;
+}
+.home-container .row {
+  width: 100%;
+}
+.home-container .card {
+  margin: 0;
+  max-width: 400px;
+  border-radius: 15px;
+  overflow: hidden;
+  height: 50vh;
+}
+
+.home-container .card-body {
+  text-align: center;
+  height: 100%;
+  padding: 0%;
+}
+
+.btn{
+  height: 100%;
+  width: 100%;
+}

@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -29,8 +30,10 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
+            "styles": ["src/styles.scss"],
+            "scripts": [
+              "node_modules/chart.js/dist/chart.js",
+              "node_modules/chart.js/dist/chart.js"
             ]
           },
           "configurations": {

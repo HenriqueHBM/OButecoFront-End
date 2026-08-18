@@ -1,0 +1,18 @@
+.login-container {
+  min-height: 100vh;
+  padding: 10vh;
+  margin: 0;
+  background: linear-gradient(to right,#FFC40C 50%,#FFF4CE 50%);
+  align-items: center;
+}
+
+.formulario {
+  width: 100%;
+  max-width: 400px;
+}
+
+.formulario button {
+  display: block;
+  margin: 3vh auto;
+
+}

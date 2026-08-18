@@ -1,0 +1,48 @@
+<table class="table align-middle table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Usuário</th>
+      <th scope="col">Cargo</th>
+      <th scope="col">Status</th>
+      <th scope="col">Data Criação</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>   
+    @for (user of list_usuarios; track $index) {
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.nome }}</td>
+            <td>{{ user.usuario }}</td>
+            <td>{{ user.cargo }}</td>
+            <td>
+                @if(user.status){
+                    <span class="badge badge-success rounded-pill p-2 px-3">
+                        Ativo
+                    </span>
+                }
+                @else{
+                    <span class="badge badge-danger rounded-pill p-2 px-3">
+                        Inativo
+                    </span>
+                }
+            </td>
+            <td>{{ user.data_criacao }}</td>
+            <td class="text-end ">
+                <div class="d-flex align-items-center justify-content-end">
+                    <button type="button" class="btn text-warning shadow-0" (click)="openEditar(user.id)">
+                        <i class="fa-solid fa-pencil fa-xl"></i>
+                    </button>
+                    
+                    <button type="button" (click)="changeStatus(user)"
+                        class="btn text-{{ user.status ? 'success' : 'danger' }} shadow-0">
+                        <i class="fa-solid fa-toggle-{{ user.status ? 'on' : 'off' }} fa-2x"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    }
+  </tbody>
+</table>

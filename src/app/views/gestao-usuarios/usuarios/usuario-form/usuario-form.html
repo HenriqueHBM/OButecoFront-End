@@ -1,0 +1,48 @@
+<form [formGroup]="myForm" (submit)="onSubmit($event)" >
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+      <i class="fa-solid fa-user"></i>
+      {{ isEditar() ? "Editar" : "Cadastrar" }} Usuário
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+  </div>
+  
+  <div class="modal-body">
+    <div class="row mb-4">
+      <div class="col">
+        <input type="hidden" name="id" formControlName="id" >
+        <mdb-form-control>
+          <input mdbInput type="text" id="nome" class="form-control" value="{{ usuario?.nome }}" formControlName="nome" />
+          <label mdbLabel class="form-label" for="form3Example1">Nome</label>
+        </mdb-form-control>
+        
+      </div>
+      <div class="col">
+        <select class="form-control" required value="{{ usuario?.cargo }}" formControlName="cargo" >
+          <option value="null" >Selecione uma opção</option>
+          <option value="Líder">Líder</option>
+          <option value="Admin">Admin</option>
+          <option value="Gerente">Gerente</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <mdb-form-control>
+          <input mdbInput type="text" id="usuario" class="form-control" value="{{ usuario?.usuario }}" formControlName="usuario" />
+          <label mdbLabel class="form-label" for="form3Example1">Usuário</label>
+        </mdb-form-control>
+      </div>
+      <div class="col">
+        <mdb-form-control>
+          <input mdbInput type="password" id="senha" class="form-control" formControlName="senha" />
+          <label mdbLabel class="form-label" for="form3Example1">Senha</label>
+        </mdb-form-control>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">fechar</button>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </div>
+</form>
