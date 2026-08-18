@@ -19,7 +19,7 @@ export class Login {
   logar(){
 
     if (this.usuario == 'admin' && this.senha == 'admin') {
-      this.router.navigate(['/admin/home']);
+      this.router.navigate(['/home']);
     } else {
       alert('Usuário ou senha estão incorretos');
     }

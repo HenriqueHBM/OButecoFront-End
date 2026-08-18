@@ -28,14 +28,13 @@ export class Usuarios {
   ) { 
     
     //salvando a lista na storage
-    localStorage.setItem("lista_usuarios", JSON.stringify(this.lista_usuarios))
+    // localStorage.setItem("lista_usuarios", JSON.stringify(this.lista_usuarios))
   }
 
   openCadastrar() {
     this.modalRef = this.modalService.open(UsuarioForm, {
       modalClass: 'modal-lg'
     })
-    let teste = "arroz";
   }
 
   backCliked(){
