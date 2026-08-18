@@ -21,17 +21,35 @@ export class UsuarioTable {
   ) { }
 
   openEditar(id: number) {
+    let usuario = this.findById(id);
+    
     this.modalRef = this.modalService.open(UsuarioForm, {
       modalClass: 'modal-lg',
       data: {
-        usuario: this.list_usuarios[id - 1]
+        usuario: usuario
       }
     });
   }
 
   changeStatus(usuario: Usuario) {
     if (confirm(`Deseja mesmo ${usuario.status ? "Inativar" : "Ativar"} eses usuário?`)) {
-      this.list_usuarios[usuario.id - 1].status = !usuario.status;
+      this.list_usuarios.forEach((index, value) => {
+        if(index.id == usuario.id){
+          index.status = !usuario.status;
+        }
+      })
     }
+  }
+
+  findById(id_desejado:number){
+    let usuario = null;
+    this.list_usuarios.forEach((value, index) => {
+        if(value.id == id_desejado){
+          usuario = value;
+        }
+      })
+
+      return usuario;
+      
   }
 }
