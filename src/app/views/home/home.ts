@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -7,4 +9,10 @@ import { MdbFormsModule } from "mdb-angular-ui-kit/forms";
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {}
+export class Home {
+    private router = inject(Router);
+  entrar() {
+      this.router.navigate(['/admin/usuarios']);
+  }
+}
+

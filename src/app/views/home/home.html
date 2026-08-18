@@ -1,17 +1,10 @@
 <div class="container-fluid home-container">
   <div class="row justify-content-center align-items-center">
     <div class="col-lg-4">
-      <div class="card" href="/admin/usuarios">
-        <div class="bg-image hover-overlay" mdbRipple rippleColor="light" >
-          <img src="https://www.flaticon.com/br/icones-gratis/pac-man" class="img-fluid"/>
-          <a href="/admin/usuarios">
-            <div
-              class="mask"
-            ></div>
-          </a>
-        </div>
-        <div class="card-body">
-          <h3 class="card-title">Usuarios</h3>
+      <div class="card">
+        <div class="card-body" >
+          <a href="/admin/usuarios"></a>
+          <button type="button" class="btn btn-dark"  href="/admin/usuarios" mdbRipple (click)="entrar()">Usuarios</button>
         </div>
       </div>
     </div>
