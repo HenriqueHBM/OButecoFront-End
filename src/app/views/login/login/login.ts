@@ -11,15 +11,27 @@ import { Router } from '@angular/router';
 })
 export class Login {
 
+  private router = inject(Router);
+
   usuario: string = '';
   senha: string = '';
 
-  private router = inject(Router);
+  logar() {
+    const dados = localStorage.getItem('lista_usuarios');
 
-  logar(){
+    if (!dados) {
+      alert('Nenhum usuário cadastrado');
+      return;
+    }
 
-    if (this.usuario == 'admin' && this.senha == 'admin') {
-      this.router.navigate(['/home']);
+    const lista = JSON.parse(dados);
+
+    const encontrado = lista.find((usuario: any) => {
+      return usuario.usuario === this.usuario && usuario.senha === this.senha;
+    });
+
+    if (encontrado) {
+      this.router.navigate(['/admin/home']);
     } else {
       alert('Usuário ou senha estão incorretos');
     }
