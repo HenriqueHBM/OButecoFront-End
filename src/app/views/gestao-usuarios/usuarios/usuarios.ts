@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { UsuarioForm } from './usuario-form/usuario-form';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UsuarioTable } from './usuario-table/usuario-table';
 import { Location } from '@angular/common';
 import { Usuario } from '../../../models/gestao-usuarios/usuario';
+import { UsuarioService } from '../../../services/gestao_usuarios/usuario-service';
 
 @Component({
   selector: 'app-usuarios',
@@ -13,22 +14,32 @@ import { Usuario } from '../../../models/gestao-usuarios/usuario';
 })
 
 export class Usuarios {
-    modalRef: MdbModalRef<UsuarioForm> | null = null;
-
-    //criando uma lista para salvar na storaga
-    lista_usuarios: Usuario[] = [
-      {id: 1, nome: "Henrique", usuario: 'henrique.madeira',  senha: "senha", cargo: "Admin", data_criacao: new Date('2026-06-02').toLocaleDateString('pt-br'), status: true},
-      {id: 2, nome: "Daniella", usuario: 'daniella.moreira',  senha: "senha", cargo: "Líder", data_criacao: new Date('2026-06-02').toLocaleDateString('pt-br'), status: false},
-      {id: 3, nome: "Jonas",    usuario: 'jonas.lacerda',     senha: "senha", cargo: "Gerente", data_criacao: new Date('2026-06-02').toLocaleDateString('pt-br'), status: true}
-    ];
+  private usuarioService = inject(UsuarioService);
+  modalRef: MdbModalRef<UsuarioForm> | null = null;
+  // Utiliznado o signal para escutar as chamadas assincronas do observable 
+  // (aplicação roda em zonles depois da v18 do Angular)
+  list_usuarios = signal<Usuario[]>([]);
 
   constructor(
     private modalService: MdbModalService,
     private _location: Location
   ) { 
-    
-    //salvando a lista na storage
-    // localStorage.setItem("lista_usuarios", JSON.stringify(this.lista_usuarios))
+    this.listarUsuarios();
+  }
+
+    listarUsuarios(){
+    this.usuarioService.listAll().subscribe({
+      // Quando o back retornoa o que se espera
+        next: lista => {
+            // this.list_usuarios = lista;
+            this.list_usuarios.set(lista);
+            
+        },
+        // qualquer erro no banco retorna aqui
+        error: erro =>{
+            alert('Erro no banco');
+        },
+    });
   }
 
   openCadastrar() {
@@ -39,5 +50,41 @@ export class Usuarios {
 
   backCliked(){
     this._location.back();
+  }
+
+  openEditar(usuario: Usuario) {
+    
+    this.modalRef = this.modalService.open(UsuarioForm, {
+      modalClass: 'modal-lg',
+      data: {
+        usuario: usuario
+      }
+    });
+  }
+
+  changeStatus(usuario: Usuario) {
+    if (confirm(`Deseja mesmo ${usuario.status ? "Inativar" : "Ativar"} eses usuário?`)) {
+      // this.list_usuarios.forEach((index, value) => {
+      //   if(index.id == usuario.id){
+      //     index.status = !usuario.status;
+      //   }
+      // })
+    }
+  }
+
+  findById(id_desejado:number){
+    let usuario = null;
+    // this.list_usuarios.forEach((value, index) => {
+    //     if(value.id == id_desejado){
+    //       usuario = value;
+    //     }
+    //   })
+
+    //   return usuario;
+      
+  }
+
+  excluirUsuario(usuario: Usuario){
+
   }
 }

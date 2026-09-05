@@ -43,7 +43,7 @@ export class UsuarioForm implements OnInit {
     // console.log(usuario);
     if(usuario.id == null){
       usuario.id = this.listarUsuarios().length + 1;
-      usuario.data_criacao = new Date().toLocaleDateString('pt-br');
+      usuario.created_at = new Date().toLocaleDateString('pt-br');
       usuario.status = true;
       this.addNaLista(usuario)
     }else{
@@ -51,7 +51,7 @@ export class UsuarioForm implements OnInit {
       lista.forEach((element: Usuario, idx: number) => {
           if(element.id == usuario.id){
               usuario.status = element.status;
-              usuario.data_criacao = element.data_criacao;
+              usuario.created_at = element.created_at;
               lista.splice(idx, 1);
           }
       });

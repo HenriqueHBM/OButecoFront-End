@@ -1,11 +1,15 @@
+import { Timestamp } from "rxjs";
+
 export class Usuario {
-    id           !: number;
-    nome         !: string;
-    usuario      !: string;
-    senha        !: string;
-    cargo        !: string;
-    data_criacao !: string;
-    status       !: boolean
+    id         !:number;
+    nome       !: string;
+    usuario    !: string;
+    senha      !: string;
+    status     !: boolean;
+    cargo      !: string;
+    created_at !: string;
+    updated_at !: string;
+    deleted_at !:string;
 }
 
 // function constructor(

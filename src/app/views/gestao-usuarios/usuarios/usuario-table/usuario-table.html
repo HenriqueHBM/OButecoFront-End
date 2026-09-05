@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>   
-    @for (user of list_usuarios; track $index) {
+    @for (user of usuarios(); track $index) {
         <tr>
             <td>{{ user.id }}</td>
             <td>{{ user.nome }}</td>
@@ -29,16 +29,20 @@
                     </span>
                 }
             </td>
-            <td>{{ user.data_criacao }}</td>
+            <td>{{ user.created_at }}</td>
             <td class="text-end ">
                 <div class="d-flex align-items-center justify-content-end">
-                    <button type="button" class="btn text-warning shadow-0" (click)="openEditar(user.id)">
+                    <button type="button" class="btn text-warning shadow-0" (click)="editar.emit(user)">
                         <i class="fa-solid fa-pencil fa-xl"></i>
                     </button>
                     
-                    <button type="button" (click)="changeStatus(user)"
+                    <button type="button" (click)="changeStatus.emit(user)"
                         class="btn text-{{ user.status ? 'success' : 'danger' }} shadow-0">
                         <i class="fa-solid fa-toggle-{{ user.status ? 'on' : 'off' }} fa-2x"></i>
+                    </button> 
+
+                    <button type="button" class="btn text-danger shadow-0" (click)="excluir.emit(user)">
+                        <i class="fa-solid fa-trash-can" ></i>
                     </button>
                 </div>
             </td>

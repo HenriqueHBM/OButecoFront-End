@@ -22,6 +22,13 @@
   </div>
   <br />
   <div class="card card-body">
-    <app-usuario-table></app-usuario-table>
+    <app-usuario-table
+      [usuarios]="list_usuarios()" /* PROPERTY BINDING: enviando um dado para essa tag nesse "variavel = usuarios" */
+      (editar)="openEditar($event)" /* EVENT BINDING: retorno de informacao/dados */
+      (changeStatus)="changeStatus($event)"
+      (excluir)="excluirUsuario($event)"
+    >
+
+    </app-usuario-table>
   </div>
 </div>

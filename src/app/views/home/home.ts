@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [MdbFormsModule, MenuComponent, RouterOutlet],
+  imports: [MdbFormsModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
