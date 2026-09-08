@@ -6,7 +6,7 @@ export class Usuario {
     usuario    !: string;
     senha      !: string;
     status     !: boolean;
-    cargo      !: string;
+    cargo      !: number;
     created_at !: string;
     updated_at !: string;
     deleted_at !:string;

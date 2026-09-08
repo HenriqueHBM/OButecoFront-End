@@ -34,6 +34,7 @@ export class Usuarios {
             // this.list_usuarios = lista;
             this.list_usuarios.set(lista);
             
+            
         },
         // qualquer erro no banco retorna aqui
         error: erro =>{
@@ -52,8 +53,7 @@ export class Usuarios {
     this._location.back();
   }
 
-  openEditar(usuario: Usuario) {
-    
+  openEditar(usuario: Usuario) {  
     this.modalRef = this.modalService.open(UsuarioForm, {
       modalClass: 'modal-lg',
       data: {
@@ -64,11 +64,15 @@ export class Usuarios {
 
   changeStatus(usuario: Usuario) {
     if (confirm(`Deseja mesmo ${usuario.status ? "Inativar" : "Ativar"} eses usuário?`)) {
-      // this.list_usuarios.forEach((index, value) => {
-      //   if(index.id == usuario.id){
-      //     index.status = !usuario.status;
-      //   }
-      // })
+      this.usuarioService.changeStatus(usuario.id).subscribe({
+        next: sucesso => {
+            alert("Sucesso na alteracao");
+            this.listarUsuarios();
+        },
+        error: erro =>{
+          alert("Erro")
+        } 
+      });
     }
   }
 

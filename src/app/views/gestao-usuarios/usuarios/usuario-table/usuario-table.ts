@@ -16,10 +16,12 @@ export class UsuarioTable {
   usuarios = input<Usuario[]>([]);
   
   // @Output("editar") editar = new EventEmitter<Usuario>();
-  @Output("editar") editar = new EventEmitter<Usuario>();
-  @Output("changeStatus") changeStatus = new EventEmitter<Usuario>();
-  @Output("excluir") excluir = new EventEmitter<Usuario>();
+  // @Output("editar") editar = new EventEmitter<Usuario>();
+  // @Output("changeStatus") changeStatus = new EventEmitter<Usuario>();
+  // @Output("excluir") excluir = new EventEmitter<Usuario>();
 
   // Nova forma
-  // editar       = output<Usuario>();
+  editar = output<Usuario>();
+  changeStatus = output<Usuario>();
+  excluir = output<Usuario>();
 }
