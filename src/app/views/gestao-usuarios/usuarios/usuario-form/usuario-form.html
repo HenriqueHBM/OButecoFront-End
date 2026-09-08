@@ -18,11 +18,18 @@
         
       </div>
       <div class="col">
-        <select class="form-control" required value="{{ usuario?.cargo }}" formControlName="cargo" >
+        <select class="form-control" required formControlName="cargoId" >
           <option value="null" >Selecione uma opção</option>
-          <option value="Líder">Líder</option>
-          <option value="Admin">Admin</option>
-          <option value="Gerente">Gerente</option>
+          @for (item of list_cargos(); track $index) {
+            <!-- {{ item.cargo }} // {{ usuario?.cargo }} -->
+            @if (item.id == usuario?.cargo) {
+              <option value="{{ item.id }}" selected>{{ item.cargo }}</option>
+            }
+            @else {
+                <option value="{{ item.id }}" >{{ item.cargo }}</option>
+            }
+            
+          }
         </select>
       </div>
     </div>

@@ -31,7 +31,7 @@ export class Login {
     });
 
     if (encontrado) {
-      this.router.navigate(['/admin/home']);
+      this.router.navigate(['/home']);
     } else {
       alert('Usuário ou senha estão incorretos');
     }

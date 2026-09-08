@@ -1,1 +1,4 @@
-export class Cargo {}
+export class Cargo {
+    id !:number;
+    cargo !:string;
+}
