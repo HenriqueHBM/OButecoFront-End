@@ -1,21 +1,16 @@
-<div class="compainer p-5">
-  <div class="row justify-content-end">
-    <div class="col-md-1 text-end">
-      <button class="btn btn-dark" (click)="backCliked()">
-        <i class="fa-solid fa-caret-left"></i> Voltar
-      </button>
-    </div>
-  </div>
-  <br />
+<div class="p-5">
   <div class="card card-body">
     <div class="row">
       <div class="col-md-5 d-flex flex-column">
         <span class="fs-3"> Usuários </span>
         <span class="text-muted text-break"> Tela para controle dos usuários ao sistema </span>
       </div>
-      <div class="col md-6 d-flex justify-content-end text-end align-items-center">
+      <div class="col md-6 d-flex justify-content-end text-end align-items-center ">
+        <a class="btn btn-info mx-2" href="/home/gestao_usuarios/cargos" >
+           <i class="fa-solid fa-briefcase me-1"></i> Cargos
+        </a>
         <button class="btn btn-success" (click)="openCadastrar()">
-          <i class="fa-solid fa-plus"></i> Cadastrar
+          <i class="fa-solid fa-plus me-1"></i> Cadastrar
         </button>
       </div>
     </div>
@@ -32,5 +27,13 @@
     >
 
     </app-usuario-table>
+  </div>
+  <br>
+  <div class="row justify-content-start">
+    <div class="col-md-1 text-start">
+      <button class="btn btn-dark" (click)="backCliked()">
+        <i class="fa-solid fa-caret-left"></i> Voltar
+      </button>
+    </div>
   </div>
 </div>

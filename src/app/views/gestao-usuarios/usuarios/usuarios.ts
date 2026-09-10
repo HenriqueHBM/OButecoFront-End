@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import { Component, inject, signal } from '@angular/core';
 import { UsuarioForm } from './usuario-form/usuario-form';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
@@ -38,7 +39,11 @@ export class Usuarios {
         },
         // qualquer erro no banco retorna aqui
         error: erro =>{
-            alert('Erro no banco');
+            Swal.fire({
+              icon: "error",
+              title: "Conexão com o Banco",
+              text: "Parece que a conexão com o banco foi perdida"
+            })
         },
     });
   }

@@ -13,7 +13,7 @@ import { RouterOutlet } from '@angular/router';
 export class Home {
     private router = inject(Router);
   entrar() {
-      this.router.navigate(['/admin/usuarios']);
+      this.router.navigate(['home/gestao_usuarios/usuarios']);
   }
 }
 
