@@ -11,6 +11,11 @@
     </tr>
   </thead>
   <tbody>   
+    @if (!usuarios().length) {
+        <tr>
+            <td colspan="7" class="text-center">Sem Usuários</td>
+        </tr>
+    }
     @for (user of usuarios(); track $index) {
         <tr>
             <td>{{ user.id }}</td>
