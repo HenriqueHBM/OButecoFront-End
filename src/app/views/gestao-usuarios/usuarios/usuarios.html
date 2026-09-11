@@ -16,6 +16,21 @@
     </div>
   </div>
   <br />
+  <div class="d-flex justify-content-between">
+    <div class="col col-md-3 card card-body ">
+      <h5 class="card-title">Total Usuários</h5>
+      {{ list_usuarios().length }}
+    </div>
+    <div class="col col-md-3 card card-body mx-3 ">
+      <h5 class="card-title">Ativos</h5>
+      {{ list_usuarios().filter(i => i.status == true).length }}
+    </div>
+    <div class="col col-md-3 card card-body ">
+      <h5 class="card-title">Inativos</h5>
+      {{ list_usuarios().filter(i => i.status != true).length }}
+    </div>
+  </div>
+  <br />
   <div class="card card-body">
     <!-- [usuarios]="list_usuarios()" /* PROPERTY BINDING: enviando um dado para essa tag nesse "variavel = usuarios" 
          (editar)="openEditar($event)" /* EVENT BINDING: retorno de informacao/dados */ -->
