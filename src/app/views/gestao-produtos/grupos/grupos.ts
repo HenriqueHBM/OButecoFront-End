@@ -4,7 +4,7 @@ import { GrupoTable } from './grupo-table/grupo-table';
 
 @Component({
   selector: 'app-grupos',
-  imports: [GrupoTable],
+  imports: [],
   templateUrl: './grupos.html',
   styleUrl: './grupos.scss',
 })
@@ -17,5 +17,6 @@ export class Grupos {
   }
   backCliked(){
     this._location.back();
+    
   }
 }

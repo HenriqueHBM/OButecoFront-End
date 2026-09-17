@@ -1,1 +1,59 @@
-<p>produto-table works!</p>
+<table class="table align-middle table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Preço Venda</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Grupo</th>
+      <th scope="col">Status</th>
+      <th scope="col">Data Criação</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>   
+    @if (!produtos().length) {
+        <tr>
+            <td colspan="7" class="text-center">Sem produtos</td>
+        </tr>
+    }
+    @for (prod of produtos(); track $index) {
+        <tr>
+            <td>{{ prod.id }}</td>
+            <td>{{ prod.nome }}</td>
+            <td>{{ prod.preco_venda }}</td>
+            <td>{{ prod.categoria }}</td>
+            <td>{{ prod.grupo }}</td>
+            <td>
+                @if(prod.status){
+                    <span class="badge badge-success rounded-pill p-2 px-3">
+                        Ativo
+                    </span>
+                }
+                @else{
+                    <span class="badge badge-danger rounded-pill p-2 px-3">
+                        Inativo
+                    </span>
+                }
+            </td>
+            <td>{{ user.created_at }}</td>
+            <td class="text-end ">
+                <div class="d-flex align-items-center justify-content-end">
+                    <button type="button" class="btn text-warning shadow-0" (click)="editar.emit(user)">
+                        <i class="fa-solid fa-pencil fa-xl"></i>
+                    </button>
+                    
+                    <button type="button" (click)="changeStatus.emit(user)"
+                        class="btn text-{{ user.status ? 'success' : 'danger' }} shadow-0">
+                        <i class="fa-solid fa-toggle-{{ user.status ? 'on' : 'off' }} fa-2x"></i>
+                    </button> 
+
+                    <button type="button" class="btn text-danger shadow-0" (click)="excluir.emit(user)">
+                        <i class="fa-solid fa-trash-can" ></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    }
+  </tbody>
+</table>

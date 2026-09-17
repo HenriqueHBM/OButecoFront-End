@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output, output } from '@angular/core';
+import { Produto } from '../../../../models/gestao-produtos/produto';
 
 @Component({
   selector: 'app-produto-table',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   templateUrl: './produto-table.html',
   styleUrl: './produto-table.scss',
 })
-export class ProdutoTable {}
+export class ProdutoTable {
+  produtos  = input<Produto[]>([]);
+  
+  editar = output<Produto>();
+  changeStatus = output<Produto>();
+  excluir = output<Produto>();
+}
