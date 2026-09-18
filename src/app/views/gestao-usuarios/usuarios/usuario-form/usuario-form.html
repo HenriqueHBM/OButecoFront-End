@@ -20,14 +20,14 @@
       <div class="col">
         <select class="form-control" required formControlName="cargoId" >
           <option value="null" >Selecione uma opção</option>
-          @for (item of list_cargos(); track $index) {
-            <!-- {{ item.cargo }} // {{ usuario?.cargo }} -->
-            @if (item.id == usuario?.cargo) {
+          @for (item of cargos; track $index) {
+            <option [value]="item">{{ item }}</option>
+            <!-- @if (item.id == usuario?.cargo) {
               <option value="{{ item.id }}" selected>{{ item.cargo }}</option>
             }
             @else {
                 <option value="{{ item.id }}" >{{ item.cargo }}</option>
-            }
+            } -->
             
           }
         </select>

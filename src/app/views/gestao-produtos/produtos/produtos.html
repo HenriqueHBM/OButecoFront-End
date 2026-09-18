@@ -22,15 +22,15 @@
   <div class="d-flex justify-content-between">
     <div class="col col-md-3 card card-body ">
       <h5 class="card-title">Total Produtos</h5>
-      {{ list_usuarios().length }}
+      {{ list_produtos().length }}
     </div>
     <div class="col col-md-3 card card-body mx-3 ">
       <h5 class="card-title">Ativos</h5>
-      {{ list_usuarios().filter(i => i.status == true).length }}
+      {{ produtos_ativos() }}
     </div>
     <div class="col col-md-3 card card-body ">
       <h5 class="card-title">Inativos</h5>
-      {{ list_usuarios().filter(i => i.status != true).length }}
+      {{ produtos_inativos() }}
     </div>
   </div>
   <br />
@@ -42,7 +42,7 @@
       (excluir)="excluirProduto($event)"
     >
 
-    </app-usuario-table>
+    </app-produto-table>
   </div>
   <br>
   <div class="row justify-content-start">

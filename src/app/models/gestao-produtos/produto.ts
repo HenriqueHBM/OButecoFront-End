@@ -4,7 +4,7 @@ export class Produto {
     status !: boolean;
     categoria !: number;
     grupo !: number;
-    preco_venda !: double;
+    preco_venda !: number;
     obs !: string;
     created_at !: string;
     updated_at !: string;

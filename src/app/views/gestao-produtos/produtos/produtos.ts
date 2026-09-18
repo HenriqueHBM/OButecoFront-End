@@ -1,15 +1,15 @@
 import Swal from 'sweetalert2';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ProdutoForm } from './produto-form/produto-form';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ProdutoTable } from './produto-table/produto-table';
 import { Location } from '@angular/common';
 import { Produto } from '../../../models/gestao-produtos/produto';
-import { ProdutoService } from '../../../services/gestao_produtos/produto-service';
+import { ProdutoService } from '../../../services/gestao-produtos/produto-service';
 
 @Component({
   selector: 'app-produtos',
-  imports: [],
+  imports: [ProdutoTable],
   templateUrl: './produtos.html',
   styleUrl: './produtos.scss',
 })
@@ -17,6 +17,8 @@ export class Produtos {
   private produtoService = inject(ProdutoService);
   modalRef: MdbModalRef<ProdutoForm> | null = null;
   list_produtos = signal<Produto[]>([]);
+  produtos_ativos = computed(() => this.list_produtos().filter(i => i.status == true).length);
+  produtos_inativos = computed(() => this.list_produtos().filter(i => i.status != true).length);
 
   constructor(
     private modalService: MdbModalService,
@@ -26,14 +28,14 @@ export class Produtos {
   }
 
     listarUsuarios(){
-      this.usuariosService.listAll().subscribe({
-        next: lista => {
+      this.produtoService.listAll().subscribe({
+        next: (lista: Produto[]) => {
           this.list_produtos.set(lista);
 
 
         },
 
-        error: erro =>{
+        error: (erro: unknown) =>{
           Swal.fire({
             icon: "error",
             title: "Conexão com o Banco",
@@ -64,11 +66,11 @@ export class Produtos {
     changeStatus(produto: Produto){
       if (confirm(`Dejesa mesmo ${produto.status ? "Inativar" : "Ativar"} esse produto?`)){
         this.produtoService.changeStatus(produto.id).subscribe({
-          next: sucesso => {
+          next: (sucesso: string) => {
             alert("Sucesso na alteração");
-            this.listarProdutos();
+            this.listarUsuarios();
           },
-          error: erro =>{
+          error: (erro: unknown) =>{
             alert("Erro")
           }
         });

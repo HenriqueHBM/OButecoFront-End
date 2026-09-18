@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { UsuarioForm } from './usuario-form/usuario-form';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UsuarioTable } from './usuario-table/usuario-table';
@@ -20,6 +20,8 @@ export class Usuarios {
   // Utiliznado o signal para escutar as chamadas assincronas do observable
   // (aplicação roda em zonles depois da v18 do Angular)
   list_usuarios = signal<Usuario[]>([]);
+  usuarios_ativos = computed(() => this.list_usuarios().filter(i => i.status == true).length);
+  usuarios_inativos = computed(() => this.list_usuarios().filter(i => i.status != true).length);
 
   constructor(
     private modalService: MdbModalService,

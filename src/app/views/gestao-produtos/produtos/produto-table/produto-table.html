@@ -36,19 +36,19 @@
                     </span>
                 }
             </td>
-            <td>{{ user.created_at }}</td>
+            <td>{{ prod.created_at }}</td>
             <td class="text-end ">
                 <div class="d-flex align-items-center justify-content-end">
-                    <button type="button" class="btn text-warning shadow-0" (click)="editar.emit(user)">
+                    <button type="button" class="btn text-warning shadow-0" (click)="editar.emit(prod)">
                         <i class="fa-solid fa-pencil fa-xl"></i>
                     </button>
-                    
-                    <button type="button" (click)="changeStatus.emit(user)"
-                        class="btn text-{{ user.status ? 'success' : 'danger' }} shadow-0">
-                        <i class="fa-solid fa-toggle-{{ user.status ? 'on' : 'off' }} fa-2x"></i>
-                    </button> 
 
-                    <button type="button" class="btn text-danger shadow-0" (click)="excluir.emit(user)">
+                    <button type="button" (click)="changeStatus.emit(prod)"
+                        class="btn text-{{ prod.status ? 'success' : 'danger' }} shadow-0">
+                        <i class="fa-solid fa-toggle-{{ prod.status ? 'on' : 'off' }} fa-2x"></i>
+                    </button>
+
+                    <button type="button" class="btn text-danger shadow-0" (click)="excluir.emit(prod)">
                         <i class="fa-solid fa-trash-can" ></i>
                     </button>
                 </div>
