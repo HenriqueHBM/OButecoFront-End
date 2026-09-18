@@ -47,7 +47,9 @@ export class Produtos {
   openCadastrar() {
     this.modalRef = this.modalService.open(ProdutoForm, {
       modalClass: 'modal-lg'
-    })
+    });
+    //atualiza a listagem quando fechado o modal
+    this.modalRef.onClose.subscribe(() => this.listarProdutos());
   }
 
   backCliked() {
@@ -61,45 +63,69 @@ export class Produtos {
         produto: produto
       }
     });
+    //atualiza a listagem quando fechado o modal
+    this.modalRef.onClose.subscribe(() => this.listarProdutos());
   }
 
   changeStatus(produto: Produto) {
-    if (confirm(`Dejesa mesmo ${produto.status ? "Inativar" : "Ativar"} esse produto?`)) {
-      this.produtoService.changeStatus(produto.id).subscribe({
-        next: (sucesso: string) => {
-          alert("Sucesso na alteração");
-          this.listarProdutos();
-        },
-        error: (erro: unknown) => {
-          alert("Erro")
-        }
-      });
-    }
+    Swal.fire({
+      icon: "warning",
+      title: `Deseja mesmo ${produto.status == StatusEnum.ATIVO ? "Inativar" : "Ativar"} esse produto?`,
+      showCancelButton: true,
+      confirmButtonText: "Sim",
+      cancelButtonText: "Cancelar"
+    }).then(resultado => {
+      if (resultado.isConfirmed) {
+        this.produtoService.changeStatus(produto.id).subscribe({
+          next: (sucesso: string) => {
+            Swal.fire({
+              icon: "success",
+              title: "Sucesso na alteração"
+            });
+            this.listarProdutos();
+          },
+          error: (erro: unknown) => {
+            Swal.fire({
+              icon: "info",
+              title: "Erro ao salvar",
+              text: "Parece que não foi possível alterar o status do produto"
+            });
+          }
+        });
+      }
+    });
   }
   findById(id_desejado: number) {
     let produto = null;
   }
 
   excluirProduto(produto: Produto) {
-    if (confirm("Deseja mesmo excluir esse produto?")) {
-      this.produtoService.deleteProduto(produto.id).subscribe({
-        next: sucesso => {
-          Swal.fire({
-            icon: "success",
-            title: "Sucesso ao salvar"
-          });
-        },
-        error: erro => {
-          Swal.fire({
-            icon: "info",
-            title: "Erro ao salvar",
-            text: "Parece que não foi possível salvar as informações de produto"
-          })
-
-        }
-      })
-    }
-    this.listarProdutos();
+    Swal.fire({
+      icon: "warning",
+      title: "Deseja mesmo excluir esse produto?",
+      showCancelButton: true,
+      confirmButtonText: "Sim",
+      cancelButtonText: "Cancelar"
+    }).then(resultado => {
+      if (resultado.isConfirmed) {
+        this.produtoService.deleteProduto(produto.id).subscribe({
+          next: sucesso => {
+            Swal.fire({
+              icon: "success",
+              title: "Sucesso ao excluir"
+            });
+            this.listarProdutos();
+          },
+          error: erro => {
+            Swal.fire({
+              icon: "info",
+              title: "Erro ao excluir",
+              text: "Parece que não foi possível excluir o produto"
+            });
+          }
+        });
+      }
+    });
   }
 
   showInsumos(produto: Produto) {

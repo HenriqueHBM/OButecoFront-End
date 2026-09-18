@@ -81,16 +81,19 @@ export class UsuarioForm implements OnInit {
       // alert("entrei")
       this.usuarioService.updateUsuario(usuario).subscribe({
         next: sucesso => {
-          alert("sucesso ao salvar");
-          console.log(sucesso);
-          
-
+          Swal.fire({
+            icon: "success",
+            title: "Sucesso ao salvar"
+          });
         },
         error: erro =>{
-          alert("Erro ao salvar");
-
+          Swal.fire({
+            icon: "info",
+            title: "Erro ao salvar",
+            text: "Parece que não foi possível salvar as informações de usuário"
+          });
         }
-      });;
+      });
       // let lista = this.listarUsuarios();
       // lista.forEach((element: Usuario, idx: number) => {
       //     if(element.id == usuario.id){
@@ -110,10 +113,6 @@ export class UsuarioForm implements OnInit {
     }
 
     this.modalRef.close();
-    // window.location.reload();
-    setTimeout(function(){
-      window.location.reload();
-    }, 2000)
   }
 
   listarUsuarios(){

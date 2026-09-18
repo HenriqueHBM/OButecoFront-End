@@ -54,7 +54,9 @@ export class Usuarios {
   openCadastrar() {
     this.modalRef = this.modalService.open(UsuarioForm, {
       modalClass: 'modal-lg'
-    })
+    });
+    //atualiza a listagem quando fechado o modal
+    this.modalRef.onClose.subscribe(() => this.listarUsuarios());
   }
 
   backCliked() {
@@ -68,27 +70,37 @@ export class Usuarios {
         usuario: usuario
       }
     });
+    //atualiza a listagem quando fechado o modal
+    this.modalRef.onClose.subscribe(() => this.listarUsuarios());
   }
 
   changeStatus(usuario: Usuario) {
-    if (confirm(`Deseja mesmo ${usuario.status ? "Inativar" : "Ativar"} esse usuário?`)) {
-      this.usuarioService.changeStatus(usuario.id).subscribe({
-        next: sucesso => {
-          Swal.fire({
+    Swal.fire({
+      icon: "warning",
+      title: `Deseja mesmo ${usuario.status == StatusEnum.ATIVO ? "Inativar" : "Ativar"} esse usuário?`,
+      showCancelButton: true,
+      confirmButtonText: "Sim",
+      cancelButtonText: "Cancelar"
+    }).then(resultado => {
+      if (resultado.isConfirmed) {
+        this.usuarioService.changeStatus(usuario.id).subscribe({
+          next: sucesso => {
+            Swal.fire({
               icon: "success",
               title: "Sucesso ao salvar"
             });
-          this.listarUsuarios();
-        },
-        error: erro => {
-          Swal.fire({
-            icon: "info",
-            title: "Erro ao salvar",
-            text: "Parece que não foi possível salvar as informações de produto"
-          });
-        }
-      });
-    }
+            this.listarUsuarios();
+          },
+          error: erro => {
+            Swal.fire({
+              icon: "info",
+              title: "Erro ao salvar",
+              text: "Parece que não foi possível salvar as informações de usuário"
+            });
+          }
+        });
+      }
+    });
   }
 
   findById(id_desejado: number) {
@@ -104,24 +116,31 @@ export class Usuarios {
   }
 
   excluirUsuario(usuario: Usuario) {
-    if (confirm("Deseja mesmo excluir esse usuário?")) {
-      this.usuarioService.deleteUsuario(usuario.id).subscribe({
-        next: sucesso => {
-          Swal.fire({
-            icon: "success",
-            title: "Sucesso ao salvar"
-          });
-        },
-        error: erro => {
-          Swal.fire({
-            icon: "info",
-            title: "Erro ao salvar",
-            text: "Parece que não foi possível excluir o usuáiro"
-          })
-
-        }
-      })
-    }
-    this.listarUsuarios();
+    Swal.fire({
+      icon: "warning",
+      title: "Deseja mesmo excluir esse usuário?",
+      showCancelButton: true,
+      confirmButtonText: "Sim",
+      cancelButtonText: "Cancelar"
+    }).then(resultado => {
+      if (resultado.isConfirmed) {
+        this.usuarioService.deleteUsuario(usuario.id).subscribe({
+          next: sucesso => {
+            Swal.fire({
+              icon: "success",
+              title: "Sucesso ao excluir"
+            });
+            this.listarUsuarios();
+          },
+          error: erro => {
+            Swal.fire({
+              icon: "info",
+              title: "Erro ao excluir",
+              text: "Parece que não foi possível excluir o usuário"
+            });
+          }
+        });
+      }
+    });
   }
 }

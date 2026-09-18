@@ -91,10 +91,5 @@ export class ProdutoForm implements OnInit {
         })
     }
     this.modalRef.close();
-    // recarrega a tela
-    setTimeout(function(){
-      window.location.reload();
-    }, 2000)
-    
   }
 }
