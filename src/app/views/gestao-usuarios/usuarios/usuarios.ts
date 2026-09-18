@@ -1,5 +1,5 @@
-import Swal from 'sweetalert2'
-import { Component, inject, signal } from '@angular/core';
+import Swal from 'sweetalert2';
+import { Component, computed, inject, signal } from '@angular/core';
 import { UsuarioForm } from './usuario-form/usuario-form';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UsuarioTable } from './usuario-table/usuario-table';
@@ -17,14 +17,16 @@ import { UsuarioService } from '../../../services/gestao_usuarios/usuario-servic
 export class Usuarios {
   private usuarioService = inject(UsuarioService);
   modalRef: MdbModalRef<UsuarioForm> | null = null;
-  // Utiliznado o signal para escutar as chamadas assincronas do observable 
+  // Utiliznado o signal para escutar as chamadas assincronas do observable
   // (aplicação roda em zonles depois da v18 do Angular)
   list_usuarios = signal<Usuario[]>([]);
+  usuarios_ativos = computed(() => this.list_usuarios().filter(i => i.status == true).length);
+  usuarios_inativos = computed(() => this.list_usuarios().filter(i => i.status != true).length);
 
   constructor(
     private modalService: MdbModalService,
     private _location: Location
-  ) { 
+  ) {
     this.listarUsuarios();
   }
 
@@ -34,8 +36,8 @@ export class Usuarios {
         next: lista => {
             // this.list_usuarios = lista;
             this.list_usuarios.set(lista);
-            
-            
+
+
         },
         // qualquer erro no banco retorna aqui
         error: erro =>{
@@ -58,7 +60,7 @@ export class Usuarios {
     this._location.back();
   }
 
-  openEditar(usuario: Usuario) {  
+  openEditar(usuario: Usuario) {
     this.modalRef = this.modalService.open(UsuarioForm, {
       modalClass: 'modal-lg',
       data: {
@@ -68,7 +70,7 @@ export class Usuarios {
   }
 
   changeStatus(usuario: Usuario) {
-    if (confirm(`Deseja mesmo ${usuario.status ? "Inativar" : "Ativar"} eses usuário?`)) {
+    if (confirm(`Deseja mesmo ${usuario.status ? "Inativar" : "Ativar"} esse usuário?`)) {
       this.usuarioService.changeStatus(usuario.id).subscribe({
         next: sucesso => {
             alert("Sucesso na alteracao");
@@ -76,7 +78,7 @@ export class Usuarios {
         },
         error: erro =>{
           alert("Erro")
-        } 
+        }
       });
     }
   }
@@ -90,7 +92,7 @@ export class Usuarios {
     //   })
 
     //   return usuario;
-      
+
   }
 
   excluirUsuario(usuario: Usuario){

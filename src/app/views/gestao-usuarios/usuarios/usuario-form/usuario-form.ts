@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { UsuarioService } from '../../../../services/gestao_usuarios/usuario-service';
 import { CargosService } from '../../../../services/gestao_usuarios/cargos-service';
 import { Cargo } from '../../../../models/gestao-usuarios/cargo';
+import { CargosEnum } from '../../../../Enums/cargos-enum';
 
 @Component({
   selector: 'app-usuario-form',
@@ -18,6 +19,7 @@ import { Cargo } from '../../../../models/gestao-usuarios/cargo';
 export class UsuarioForm implements OnInit {
   private usuarioService = inject(UsuarioService);
   private cargoService = inject(CargosService);
+  protected readonly cargos = Object.values(CargosEnum);
 
   usuario: Usuario | null = null;
   myForm!: FormGroup;
@@ -28,25 +30,9 @@ export class UsuarioForm implements OnInit {
     public modalRef: MdbModalRef<UsuarioForm>,
     private fb: FormBuilder
   ) {
-    this.listarCargos()
   }
 
-  listarCargos(){
-    this.cargoService.listAll().subscribe({
-      // Quando o back retornoa o que se espera
-        next: lista => {
-            // this.list_usuarios = lista;
-            this.list_cargos.set(lista);
-            console.log(lista);
-            
-            
-        },
-        // qualquer erro no banco retorna aqui
-        error: erro =>{
-            alert('Erro no banco');
-        },
-    });
-  }
+
 
   isEditar(): boolean {
     return !!this.usuario?.id;
@@ -117,8 +103,8 @@ export class UsuarioForm implements OnInit {
 
     }
 
-    this.modalRef.close();
-    window.location.reload();
+    // this.modalRef.close();
+    // window.location.reload();
   }
 
   listarUsuarios(){

@@ -5,7 +5,7 @@ import { Estoques } from './estoques';
 describe('Estoques', () => {
   let component: Estoques;
   let fixture: ComponentFixture<Estoques>;
-
+  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Estoques],
