@@ -6,6 +6,7 @@ import { UsuarioTable } from './usuario-table/usuario-table';
 import { Location } from '@angular/common';
 import { Usuario } from '../../../models/gestao-usuarios/usuario';
 import { UsuarioService } from '../../../services/gestao_usuarios/usuario-service';
+import { StatusEnum } from '../../../Enums/status-enum';
 
 @Component({
   selector: 'app-usuarios',
@@ -20,8 +21,8 @@ export class Usuarios {
   // Utiliznado o signal para escutar as chamadas assincronas do observable
   // (aplicação roda em zonles depois da v18 do Angular)
   list_usuarios = signal<Usuario[]>([]);
-  usuarios_ativos = computed(() => this.list_usuarios().filter(i => i.status == true).length);
-  usuarios_inativos = computed(() => this.list_usuarios().filter(i => i.status != true).length);
+  usuarios_ativos = computed(() => this.list_usuarios().filter(i => i.status == StatusEnum.ATIVO).length);
+  usuarios_inativos = computed(() => this.list_usuarios().filter(i => i.status == StatusEnum.INATIVO).length);
 
   constructor(
     private modalService: MdbModalService,
@@ -30,23 +31,23 @@ export class Usuarios {
     this.listarUsuarios();
   }
 
-    listarUsuarios(){
+  listarUsuarios() {
     this.usuarioService.listAll().subscribe({
       // Quando o back retornoa o que se espera
-        next: lista => {
-            // this.list_usuarios = lista;
-            this.list_usuarios.set(lista);
+      next: lista => {
+        // this.list_usuarios = lista;
+        this.list_usuarios.set(lista);
 
 
-        },
-        // qualquer erro no banco retorna aqui
-        error: erro =>{
-            Swal.fire({
-              icon: "error",
-              title: "Conexão com o Banco",
-              text: "Parece que a conexão com o banco foi perdida"
-            })
-        },
+      },
+      // qualquer erro no banco retorna aqui
+      error: erro => {
+        Swal.fire({
+          icon: "error",
+          title: "Conexão com o Banco",
+          text: "Parece que a conexão com o banco foi perdida"
+        })
+      },
     });
   }
 
@@ -56,7 +57,7 @@ export class Usuarios {
     })
   }
 
-  backCliked(){
+  backCliked() {
     this._location.back();
   }
 
@@ -73,17 +74,24 @@ export class Usuarios {
     if (confirm(`Deseja mesmo ${usuario.status ? "Inativar" : "Ativar"} esse usuário?`)) {
       this.usuarioService.changeStatus(usuario.id).subscribe({
         next: sucesso => {
-            alert("Sucesso na alteracao");
-            this.listarUsuarios();
+          Swal.fire({
+              icon: "success",
+              title: "Sucesso ao salvar"
+            });
+          this.listarUsuarios();
         },
-        error: erro =>{
-          alert("Erro")
+        error: erro => {
+          Swal.fire({
+            icon: "info",
+            title: "Erro ao salvar",
+            text: "Parece que não foi possível salvar as informações de produto"
+          });
         }
       });
     }
   }
 
-  findById(id_desejado:number){
+  findById(id_desejado: number) {
     let usuario = null;
     // this.list_usuarios.forEach((value, index) => {
     //     if(value.id == id_desejado){
@@ -95,7 +103,25 @@ export class Usuarios {
 
   }
 
-  excluirUsuario(usuario: Usuario){
+  excluirUsuario(usuario: Usuario) {
+    if (confirm("Deseja mesmo excluir esse usuário?")) {
+      this.usuarioService.deleteUsuario(usuario.id).subscribe({
+        next: sucesso => {
+          Swal.fire({
+            icon: "success",
+            title: "Sucesso ao salvar"
+          });
+        },
+        error: erro => {
+          Swal.fire({
+            icon: "info",
+            title: "Erro ao salvar",
+            text: "Parece que não foi possível excluir o usuáiro"
+          })
 
+        }
+      })
+    }
+    this.listarUsuarios();
   }
 }

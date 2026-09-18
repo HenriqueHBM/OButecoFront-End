@@ -54,12 +54,16 @@ export class ProdutoForm implements OnInit {
     if (produto.id == null) {
       this.produtoService.save(produto).subscribe({
         next: sucesso => {
-          alert("sucesso ao salvar");
+          // alert("sucesso ao salvar");
+          Swal.fire({
+            icon: "success",
+            title: "Sucesso ao salvar"
+          })
 
         },
         error: erro => {
           // alert("Erro ao salvar");
-          console.log(erro);
+          // console.log(erro);
           
             Swal.fire({
               icon: "info",
@@ -69,9 +73,28 @@ export class ProdutoForm implements OnInit {
         }
       })
     } else {
+        this.produtoService.updateProduto(produto).subscribe({
+          next: sucesso => {
+            Swal.fire({
+              icon: "success",
+              title: "Sucesso ao salvar"
+            });
+          },
+          error: erro =>{
+            Swal.fire({
+              icon: "info",
+              title: "Erro ao salvar",
+              text: "Parece que não foi possível salvar as informações de produto"
+            });
 
+          }
+        })
     }
     this.modalRef.close();
-    // window.location.reload();
+    // recarrega a tela
+    setTimeout(function(){
+      window.location.reload();
+    }, 2000)
+    
   }
 }

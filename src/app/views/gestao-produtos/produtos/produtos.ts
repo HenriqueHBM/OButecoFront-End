@@ -29,62 +29,80 @@ export class Produtos {
     this.listarProdutos();
   }
 
-    listarProdutos(){
-      this.produtoService.listAll().subscribe({
-        next: (lista: Produto[]) => {
-          this.list_produtos.set(lista);
+  listarProdutos() {
+    this.produtoService.listAll().subscribe({
+      next: (lista: Produto[]) => {
+        this.list_produtos.set(lista);
+      },
+
+      error: (erro: unknown) => {
+        Swal.fire({
+          icon: "error",
+          title: "Conexão com o Banco",
+          text: "Parece que a conexão com o banco foi perdia"
+        })
+      },
+    });
+  }
+  openCadastrar() {
+    this.modalRef = this.modalService.open(ProdutoForm, {
+      modalClass: 'modal-lg'
+    })
+  }
+
+  backCliked() {
+    this._location.back();
+  }
+
+  openEditar(produto: Produto) {
+    this.modalRef = this.modalService.open(ProdutoForm, {
+      modalClass: 'modal-lg',
+      data: {
+        produto: produto
+      }
+    });
+  }
+
+  changeStatus(produto: Produto) {
+    if (confirm(`Dejesa mesmo ${produto.status ? "Inativar" : "Ativar"} esse produto?`)) {
+      this.produtoService.changeStatus(produto.id).subscribe({
+        next: (sucesso: string) => {
+          alert("Sucesso na alteração");
+          this.listarProdutos();
         },
-
-        error: (erro: unknown) =>{ 
-          Swal.fire({
-            icon: "error",
-            title: "Conexão com o Banco",
-            text: "Parece que a conexão com o banco foi perdia"
-          })
-        },
-      });
-    }
-    openCadastrar(){
-      this.modalRef = this.modalService.open(ProdutoForm, {
-        modalClass: 'modal-lg'
-      })
-    }
-
-    backCliked(){
-      this._location.back();
-    }
-
-    openEditar(produto: Produto){
-      this.modalRef = this.modalService.open(ProdutoForm, {
-        modalClass: 'modal-lg' ,
-        data: {
-          produto: produto
+        error: (erro: unknown) => {
+          alert("Erro")
         }
       });
     }
+  }
+  findById(id_desejado: number) {
+    let produto = null;
+  }
 
-    changeStatus(produto: Produto){
-      if (confirm(`Dejesa mesmo ${produto.status ? "Inativar" : "Ativar"} esse produto?`)){
-        this.produtoService.changeStatus(produto.id).subscribe({
-          next: (sucesso: string) => {
-            alert("Sucesso na alteração");
-            this.listarProdutos();
-          },
-          error: (erro: unknown) =>{
-            alert("Erro")
-          }
-        });
-      }
-    }
-    findById(id_desejado: number){
-      let produto = null;
-    }
+  excluirProduto(produto: Produto) {
+    if (confirm("Deseja mesmo excluir esse produto?")) {
+      this.produtoService.deleteProduto(produto.id).subscribe({
+        next: sucesso => {
+          Swal.fire({
+            icon: "success",
+            title: "Sucesso ao salvar"
+          });
+        },
+        error: erro => {
+          Swal.fire({
+            icon: "info",
+            title: "Erro ao salvar",
+            text: "Parece que não foi possível salvar as informações de produto"
+          })
 
-    excluirProduto( produto : Produto){
-
+        }
+      })
     }
+    this.listarProdutos();
+  }
 
-    showInsumos(produto: Produto){
-      
-    }
+  showInsumos(produto: Produto) {
+
+  }
 }

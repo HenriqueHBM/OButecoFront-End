@@ -39,4 +39,8 @@ export class UsuarioService {
   updateUsuario(usuario: Usuario): Observable<string>{
     return this.http.put<string>(`${this.API}/${usuario.id}`, usuario, { responseType: 'text' as 'json' });
   }
+  
+  deleteUsuario(id:number):Observable<string>{
+    return this.http.delete<string>(`${this.API}/${id}`);
+  }
 }

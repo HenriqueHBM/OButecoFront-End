@@ -5,7 +5,8 @@ import { Usuario } from '../../../../models/gestao-usuarios/usuario';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../../services/gestao_usuarios/usuario-service';
 import { Cargo } from '../../../../models/gestao-usuarios/cargo';
-import { CargosEnum } from '../../../../Enums/cargos-enum';
+import { CARGOS_LABELS, CargosEnum } from '../../../../Enums/cargos-enum';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario-form',
@@ -18,6 +19,7 @@ import { CargosEnum } from '../../../../Enums/cargos-enum';
 export class UsuarioForm implements OnInit {
   private usuarioService = inject(UsuarioService);
   protected readonly cargos = Object.values(CargosEnum);
+  protected readonly cargosLabels = CARGOS_LABELS;
 
   usuario: Usuario | null = null;
   myForm!: FormGroup;
@@ -39,7 +41,7 @@ export class UsuarioForm implements OnInit {
     this.myForm = this.fb.group({
       id: [this.usuario?.id],
       nome: [this.usuario?.nome, Validators.required],
-      cargoId: [this.usuario?.cargo, Validators.required],
+      cargoEnum: [this.usuario?.cargoEnum, Validators.required],
       usuario: [this.usuario?.usuario, Validators.required],
       senha: [null]
     });
@@ -53,11 +55,18 @@ export class UsuarioForm implements OnInit {
     if(usuario.id == null){
       this.usuarioService.save(usuario).subscribe({
         next: sucesso => {
-          alert("sucesso ao salvar");
+         Swal.fire({
+            icon: "success",
+            title: "Sucesso ao salvar"
+          })
 
         },
         error: erro =>{
-          alert("Erro ao salvar");
+          Swal.fire({
+            icon: "info",
+            title: "Erro ao salvar",
+            text: "Parece que não foi possível salvar as informações de usuário"
+          });
 
         }
       });
@@ -101,7 +110,10 @@ export class UsuarioForm implements OnInit {
     }
 
     this.modalRef.close();
-    window.location.reload();
+    // window.location.reload();
+    setTimeout(function(){
+      window.location.reload();
+    }, 2000)
   }
 
   listarUsuarios(){
