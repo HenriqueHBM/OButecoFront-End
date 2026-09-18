@@ -10,7 +10,7 @@ export class ProdutoService {
   
   http =  inject(HttpClient);
 
-  API = "http//localhost:8080/produtos";
+  API = "http://localhost:8080/produtos";
 
   constructor(){ }
 

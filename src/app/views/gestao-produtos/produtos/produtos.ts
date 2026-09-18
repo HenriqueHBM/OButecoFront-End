@@ -6,6 +6,7 @@ import { ProdutoTable } from './produto-table/produto-table';
 import { Location } from '@angular/common';
 import { Produto } from '../../../models/gestao-produtos/produto';
 import { ProdutoService } from '../../../services/gestao-produtos/produto-service';
+import { StatusEnum } from '../../../Enums/status-enum';
 
 @Component({
   selector: 'app-produtos',
@@ -17,25 +18,24 @@ export class Produtos {
   private produtoService = inject(ProdutoService);
   modalRef: MdbModalRef<ProdutoForm> | null = null;
   list_produtos = signal<Produto[]>([]);
-  produtos_ativos = computed(() => this.list_produtos().filter(i => i.status == true).length);
-  produtos_inativos = computed(() => this.list_produtos().filter(i => i.status != true).length);
+
+  produtos_ativos = computed(() => this.list_produtos().filter(i => i.status == StatusEnum.ATIVO).length);
+  produtos_inativos = computed(() => this.list_produtos().filter(i => i.status == StatusEnum.INATIVO).length);
 
   constructor(
     private modalService: MdbModalService,
     private _location: Location
   ) {
-    this.listarUsuarios();
+    this.listarProdutos();
   }
 
-    listarUsuarios(){
+    listarProdutos(){
       this.produtoService.listAll().subscribe({
         next: (lista: Produto[]) => {
           this.list_produtos.set(lista);
-
-
         },
 
-        error: (erro: unknown) =>{
+        error: (erro: unknown) =>{ 
           Swal.fire({
             icon: "error",
             title: "Conexão com o Banco",
@@ -68,7 +68,7 @@ export class Produtos {
         this.produtoService.changeStatus(produto.id).subscribe({
           next: (sucesso: string) => {
             alert("Sucesso na alteração");
-            this.listarUsuarios();
+            this.listarProdutos();
           },
           error: (erro: unknown) =>{
             alert("Erro")
@@ -82,5 +82,9 @@ export class Produtos {
 
     excluirProduto( produto : Produto){
 
+    }
+
+    showInsumos(produto: Produto){
+      
     }
 }

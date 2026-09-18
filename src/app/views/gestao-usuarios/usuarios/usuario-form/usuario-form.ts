@@ -4,7 +4,6 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Usuario } from '../../../../models/gestao-usuarios/usuario';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../../services/gestao_usuarios/usuario-service';
-import { CargosService } from '../../../../services/gestao_usuarios/cargos-service';
 import { Cargo } from '../../../../models/gestao-usuarios/cargo';
 import { CargosEnum } from '../../../../Enums/cargos-enum';
 
@@ -18,12 +17,10 @@ import { CargosEnum } from '../../../../Enums/cargos-enum';
 
 export class UsuarioForm implements OnInit {
   private usuarioService = inject(UsuarioService);
-  private cargoService = inject(CargosService);
   protected readonly cargos = Object.values(CargosEnum);
 
   usuario: Usuario | null = null;
   myForm!: FormGroup;
-  // cargos: Cargo[] = [];
   list_cargos = signal<Cargo[]>([]);
 
   constructor(
@@ -103,8 +100,8 @@ export class UsuarioForm implements OnInit {
 
     }
 
-    // this.modalRef.close();
-    // window.location.reload();
+    this.modalRef.close();
+    window.location.reload();
   }
 
   listarUsuarios(){
