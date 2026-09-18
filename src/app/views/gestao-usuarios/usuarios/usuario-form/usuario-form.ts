@@ -1,12 +1,11 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Usuario } from '../../../../models/gestao-usuarios/usuario';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../../services/gestao_usuarios/usuario-service';
-import { CargosService } from '../../../../services/gestao_usuarios/cargos-service';
-import { Cargo } from '../../../../models/gestao-usuarios/cargo';
-import { CargosEnum } from '../../../../Enums/cargos-enum';
+import { CARGOS_LABELS, CargosEnum } from '../../../../Enums/cargos-enum';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario-form',
@@ -18,13 +17,11 @@ import { CargosEnum } from '../../../../Enums/cargos-enum';
 
 export class UsuarioForm implements OnInit {
   private usuarioService = inject(UsuarioService);
-  private cargoService = inject(CargosService);
   protected readonly cargos = Object.values(CargosEnum);
+  protected readonly cargosLabels = CARGOS_LABELS;
 
   usuario: Usuario | null = null;
   myForm!: FormGroup;
-  // cargos: Cargo[] = [];
-  list_cargos = signal<Cargo[]>([]);
 
   constructor(
     public modalRef: MdbModalRef<UsuarioForm>,
@@ -42,7 +39,7 @@ export class UsuarioForm implements OnInit {
     this.myForm = this.fb.group({
       id: [this.usuario?.id],
       nome: [this.usuario?.nome, Validators.required],
-      cargoId: [this.usuario?.cargo, Validators.required],
+      cargoEnum: [this.usuario?.cargoEnum, Validators.required],
       usuario: [this.usuario?.usuario, Validators.required],
       senha: [null]
     });
@@ -56,69 +53,41 @@ export class UsuarioForm implements OnInit {
     if(usuario.id == null){
       this.usuarioService.save(usuario).subscribe({
         next: sucesso => {
-          alert("sucesso ao salvar");
+         Swal.fire({
+            icon: "success",
+            title: "Sucesso ao salvar"
+          })
 
         },
         error: erro =>{
-          alert("Erro ao salvar");
+          Swal.fire({
+            icon: "info",
+            title: "Erro ao salvar",
+            text: "Parece que não foi possível salvar as informações de usuário"
+          });
 
         }
       });
-      // usuario.id = this.listarUsuarios().length + 1;
-      // usuario.created_at = new Date().toLocaleDateString('pt-br');
-      // usuario.status = true;
-      // this.addNaLista(usuario)
-
 
       // Editar
     }else{
-      // alert("entrei")
       this.usuarioService.updateUsuario(usuario).subscribe({
         next: sucesso => {
-          alert("sucesso ao salvar");
-          console.log(sucesso);
-          
-
+          Swal.fire({
+            icon: "success",
+            title: "Sucesso ao salvar"
+          });
         },
         error: erro =>{
-          alert("Erro ao salvar");
-
+          Swal.fire({
+            icon: "info",
+            title: "Erro ao salvar",
+            text: "Parece que não foi possível salvar as informações de usuário"
+          });
         }
-      });;
-      // let lista = this.listarUsuarios();
-      // lista.forEach((element: Usuario, idx: number) => {
-      //     if(element.id == usuario.id){
-      //         usuario.status = element.status;
-      //         usuario.created_at = element.created_at;
-      //         lista.splice(idx, 1);
-      //     }
-      // });
-
-      // let user = lista[usuario.id - 1];
-      // lista.splice(usuario.id - 1, 1);
-      
-      // lista.push(usuario);
-      // this.addNaLista(usuario);
-      // this.updateLista(lista);
-
+      });
     }
 
-    // this.modalRef.close();
-    // window.location.reload();
-  }
-
-  listarUsuarios(){
-    return JSON.parse(localStorage.getItem("lista_usuarios") ?? "[]");
-  }
-
-  addNaLista(usuario: Usuario){
-    // let list_usuarios = this.listarUsuarios();
-    // list_usuarios.push(usuario);
-    // localStorage.setItem("lista_usuarios", JSON.stringify(list_usuarios));
-
-  }
-
-  updateLista(new_lista: []){
-    // localStorage.setItem("lista_usuarios", JSON.stringify(new_lista));
+    this.modalRef.close();
   }
 }

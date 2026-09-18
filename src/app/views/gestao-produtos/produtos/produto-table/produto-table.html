@@ -21,11 +21,11 @@
         <tr>
             <td>{{ prod.id }}</td>
             <td>{{ prod.nome }}</td>
-            <td>{{ prod.preco_venda }}</td>
-            <td>{{ prod.categoria }}</td>
-            <td>{{ prod.grupo }}</td>
+            <td>{{ prod.precoVenda ? `R$: ${prod.precoVenda}`: "" }}</td>
+            <td>{{ prod.categoriaEnum }}</td>
+            <td>{{ prod.grupoEnum }}</td>
             <td>
-                @if(prod.status){
+                @if(prod.status == status.ATIVO){
                     <span class="badge badge-success rounded-pill p-2 px-3">
                         Ativo
                     </span>
@@ -44,13 +44,17 @@
                     </button>
 
                     <button type="button" (click)="changeStatus.emit(prod)"
-                        class="btn text-{{ prod.status ? 'success' : 'danger' }} shadow-0">
-                        <i class="fa-solid fa-toggle-{{ prod.status ? 'on' : 'off' }} fa-2x"></i>
+                        class="btn text-{{ prod.status == status.ATIVO ? 'success' : 'danger' }} shadow-0">
+                        <i class="fa-solid fa-toggle-{{ prod.status == status.ATIVO ? 'on' : 'off' }} fa-2x"></i>
                     </button>
 
                     <button type="button" class="btn text-danger shadow-0" (click)="excluir.emit(prod)">
                         <i class="fa-solid fa-trash-can" ></i>
                     </button>
+
+                    <!-- <button type="button" class="btn shadow-0" (click)="insumos.emit(prod)">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </button> -->
                 </div>
             </td>
         </tr>

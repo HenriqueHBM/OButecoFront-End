@@ -10,7 +10,7 @@ export class ProdutoService {
   
   http =  inject(HttpClient);
 
-  API = "http//localhost:8080/produtos";
+  API = "http://localhost:8080/produtos";
 
   constructor(){ }
 
@@ -34,5 +34,9 @@ export class ProdutoService {
 
   updateProduto(produto: Produto): Observable<string>{
     return this.http.put<string>(`${this.API}/${produto.id}`, produto, { responseType: 'text' as 'json' });
+  }
+
+  deleteProduto(id:number): Observable<string>{
+    return this.http.delete<string>(`${this.API}/${id}`);
   }
 }
