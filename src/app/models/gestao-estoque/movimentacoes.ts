@@ -2,10 +2,11 @@ export class Movimentacoes {
     id !: number;
     estoque !: number;
     tipo !: string;
-    quantidade !: number;
-    valor_unidade !: number;
+    qtde !: number;
+    valorUnitario !: number;
+    valorTotal !: number;
     usuario !: number;
     conversao !: number;
-    data_movto !: string;
-    obs !: string;
+    dataMovimentacao !: string;
+    observacao !: string;
 }
