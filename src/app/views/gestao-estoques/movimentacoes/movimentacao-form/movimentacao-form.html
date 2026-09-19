@@ -1,16 +1,18 @@
 <form [formGroup]="myForm" (submit)="onSubmit($event)">
   <div class="row mb-4">
     <div class="col">
-      <select class="form-control" required formControlName="tipo">
+      <select class="form-control" [class.is-invalid]="campoInvalido('tipo')" required formControlName="tipo">
         <option value="TIPO_ENTRADA" selected>Entrada</option>
         <option value="TIPO_SAIDA">Saída</option>
       </select>
+      <div class="invalid-feedback">Tipo é obrigatório</div>
     </div>
     <div class="col">
       <mdb-form-control>
-        <input mdbInput type="text" id="qtde" class="form-control" formControlName="qtde" />
+        <input mdbInput type="text" id="qtde" class="form-control" [class.is-invalid]="campoInvalido('qtde')" required formControlName="qtde" />
         <label mdbLabel class="form-label" for="qtde">Quantidade</label>
       </mdb-form-control>
+      <div class="invalid-feedback">Quantidade é obrigatória</div>
     </div>
   </div>
   <div class="row mb-4">
@@ -21,16 +23,20 @@
           type="text"
           id="valorUnitario"
           class="form-control"
+          [class.is-invalid]="campoInvalido('valorUnitario')"
+          required
           formControlName="valorUnitario"
         />
         <label mdbLabel class="form-label" for="valorUnitario">Val. Unitário</label>
       </mdb-form-control>
+      <div class="invalid-feedback">Valor unitário é obrigatório</div>
     </div>
     <div class="col">
-      <select class="form-control" required formControlName="fk_id_conversao">
+      <select class="form-control" [class.is-invalid]="campoInvalido('fk_id_conversao')" required formControlName="fk_id_conversao">
         <option value="1">Quilograma</option>
         <option value="2">Grama</option>
       </select>
+      <div class="invalid-feedback">Conversão é obrigatória</div>
     </div>
   </div>
 

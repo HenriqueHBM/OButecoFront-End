@@ -12,34 +12,37 @@
       <div class="col">
         <input type="hidden" name="id" formControlName="id" >
         <mdb-form-control>
-          <input mdbInput type="text" id="nome" class="form-control" value="{{ produto?.nome }}" formControlName="nome" />
+          <input mdbInput type="text" id="nome" class="form-control" [class.is-invalid]="campoInvalido('nome')" required value="{{ produto?.nome }}" formControlName="nome" />
           <label mdbLabel class="form-label" for="nome">Nome</label>
         </mdb-form-control>
-        
+        <div class="invalid-feedback">Nome é obrigatório</div>
       </div>
       <div class="col">
         <mdb-form-control>
-          <input mdbInput type="text" id="precoVenda" class="form-control" value="{{ produto?.precoVenda }}" formControlName="precoVenda" />
+          <input mdbInput type="text" id="precoVenda" class="form-control" [class.is-invalid]="campoInvalido('precoVenda')" required value="{{ produto?.precoVenda }}" formControlName="precoVenda" />
           <label mdbLabel class="form-label" for="precoVenda">Preço Venda</label>
         </mdb-form-control>
+        <div class="invalid-feedback">Preço de venda é obrigatório</div>
       </div>
     </div>
     <div class="row mb-4">
       <div class="col">
-      <select class="form-control" required formControlName="categoriaEnum" >
+      <select class="form-control" [class.is-invalid]="campoInvalido('categoriaEnum')" required formControlName="categoriaEnum" >
           <option selected>Selecione uma opção</option>
           @for (item of categorias; track $index) {
             <option [value]="item">{{ categoriasLabels[item] }}</option>
           }
         </select>
+        <div class="invalid-feedback">Categoria é obrigatória</div>
       </div>
       <div class="col">
-        <select class="form-control" required formControlName="grupoEnum" >
+        <select class="form-control" [class.is-invalid]="campoInvalido('grupoEnum')" required formControlName="grupoEnum" >
           <option selected>Selecione uma opção</option>
           @for (item of grupos; track $index) {
             <option [value]="item">{{ gruposLabels[item] }}</option>
           }
         </select>
+        <div class="invalid-feedback">Grupo é obrigatório</div>
       </div>
     </div>
   </div>

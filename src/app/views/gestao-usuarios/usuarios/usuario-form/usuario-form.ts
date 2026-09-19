@@ -45,8 +45,19 @@ export class UsuarioForm implements OnInit {
     });
   }
 
+  campoInvalido(campo: string): boolean {
+    const controle = this.myForm.get(campo);
+    return !!controle && controle.invalid && controle.touched;
+  }
+
   onSubmit(e: Event) {
     e.preventDefault();
+
+    if (this.myForm.invalid) {
+      this.myForm.markAllAsTouched();
+      return;
+    }
+
     const usuario: Usuario = this.myForm.value;
 
     // Cadastrar
