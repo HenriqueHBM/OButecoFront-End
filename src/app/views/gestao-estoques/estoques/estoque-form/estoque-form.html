@@ -1,1 +1,67 @@
-<p>estoque-form works!</p>
+<form [formGroup]="myForm" (submit)="onSubmit($event)">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+      <i class="fa-solid fa-boxes-stacked"></i>
+      Cadastrar Estoque
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row mb-4">
+      <div class="col">
+        <select
+          class="form-control"
+          [class.is-invalid]="campoInvalido('fk_id_produto')"
+          required
+          formControlName="fk_id_produto"
+        >
+          <option selected>Selecione uma opção</option>
+          @for (produto of list_produtos; track produto.id) {
+            <option [value]="produto.id">{{ produto.nome }}</option>
+          }
+        </select>
+        <div class="invalid-feedback">Produto é obrigatório</div>
+      </div>
+      <div class="col">
+        <mdb-form-control>
+          <input
+            mdbInput
+            type="text"
+            id="qtdeEstoque"
+            class="form-control"
+            [class.is-invalid]="campoInvalido('qtdeEstoque')"
+            required
+            formControlName="qtdeEstoque"
+          />
+          <label mdbLabel class="form-label" for="qtdeEstoque">Quantidade</label>
+        </mdb-form-control>
+        <div class="invalid-feedback">Quantidade é obrigatória e deve ser maior que zero</div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <select
+          class="form-control"
+          [class.is-invalid]="campoInvalido('fk_id_conversao')"
+          required
+          formControlName="fk_id_conversao"
+        >
+          <option value="1">Quilograma</option>
+          <option value="2">Grama</option>
+        </select>
+        <div class="invalid-feedback">Conversão é obrigatória</div>
+      </div>
+      <div class="col">
+        <mdb-form-control>
+          <input mdbInput type="text" id="local" class="form-control" formControlName="local" />
+          <label mdbLabel class="form-label" for="local">Local</label>
+        </mdb-form-control>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">fechar</button>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </div>
+</form>

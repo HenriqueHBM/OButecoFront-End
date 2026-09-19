@@ -1,1 +1,72 @@
-<p>estoques works!</p>
+<div class="p-5">
+  <div class="card card-body">
+    <div class="row">
+      <div class="col-md-5 d-flex flex-column">
+        <span class="fs-3"> Estoques</span>
+        <span class="text-muted text-break"> Tela para controle dos estoques ao sistema </span>
+      </div>
+      <div class="col md-6 d-flex justify-content-end text-end align-items-center ">
+        <button class="btn btn-success" (click)="openCadastrar()">
+          <i class="fa-solid fa-plus me-1"></i> Cadastrar
+        </button>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="card card-body">
+    <app-estoque-table
+        [estoques]="list_estoques()"
+        (show)="openMovimentacoes($event)"
+        (mov)="openCadastrarMovimentacao($event)"
+        >
+
+    </app-estoque-table>
+  </div>
+  <br>
+  <div class="row justify-content-start">
+    <div class="col-md-1 text-start">
+      <button class="btn btn-dark" (click)="backCliked()">
+        <i class="fa-solid fa-caret-left"></i> Voltar
+      </button>
+    </div>
+  </div>
+</div>
+<ng-template #modalMovimentacoes>
+    <div class="modal-header">
+        <div class="modal-title">Movimentações</div>
+        <button 
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="modalRef.close()"
+        >
+
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-movimentacao-table (retorno)="retornoMovimentacoes($event)" [idEstoque]="idEstoqueSelecionado()">
+
+        </app-movimentacao-table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modalRef.close()">fechar</button>
+    </div>
+</ng-template>
+<ng-template #modalCadastrarMovimentacao>
+    <div class="modal-header">
+        <div class="modal-title">Cadastrar Movimentação</div>
+        <button 
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="modalRef.close()"
+        >
+
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-movimentacao-form [idEstoque]="idEstoqueSelecionado()" (retorno)="retornoCadastrarMovimentacao()">
+
+        </app-movimentacao-form>
+    </div>
+</ng-template>

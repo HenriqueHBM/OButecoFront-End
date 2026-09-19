@@ -1,1 +1,35 @@
-<p>movimentacao-table works!</p>
+<table class="table align-middle table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Qnt.</th>
+      <th scope="col">Val. Unit.</th>
+      <th scope="col">Val. Total</th>
+      <th scope="col">Usuário</th>
+      <th scope="col">Conversão</th>
+      <th scope="col">Obs.</th>
+      <th scope="col">Data</th>
+    </tr>
+  </thead>
+  <tbody>   
+    @if (!list_movimentacoes().length) {
+        <tr>
+            <td colspan="9" class="text-center">Sem Movimentações</td>
+        </tr>
+    }
+    @for (estoque of list_movimentacoes(); track $index) {
+        <tr>
+          <td>{{ estoque.id }}</td>
+          <td>{{ estoque.tipo }}</td>
+          <td>{{ estoque.qtde }}</td>
+          <td>{{ estoque.valorUnitario }}</td>
+          <td>{{ estoque.valorTotal }}</td>
+          <td>{{ estoque.usuario }}</td>
+          <td>{{ estoque.conversao }}</td>
+          <td>{{ estoque.observacao }}</td>
+          <td>{{ estoque.dataMovimentacao }}</td>
+        </tr>
+    }
+  </tbody>
+</table>

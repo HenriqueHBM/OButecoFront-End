@@ -1,10 +1,13 @@
+import { StatusEnum } from "../../Enums/status-enum";
+
 export class Estoque {
     id !: number;
-    produto !: number;
-    qtd_estoque !: number;
-    conversao !: number;
+    fk_id_produto !: number
+    produto !: string;
+    qtdeEstoque !: number;
+    fk_id_conversao !: number;
     local !: string;
-    created_at !: string;
-    updated_at !: string;
+    dataCriacao !: string;
+    dataAtualizado !: string;
     deleted_at !:string;
 }
