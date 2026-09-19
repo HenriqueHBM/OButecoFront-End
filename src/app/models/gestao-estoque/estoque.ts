@@ -2,7 +2,8 @@ import { StatusEnum } from "../../Enums/status-enum";
 
 export class Estoque {
     id !: number;
-    produto !: number;
+    fk_id_produto !: number
+    produto !: string;
     qtdeEstoque !: number;
     fk_id_conversao !: number;
     local !: string;

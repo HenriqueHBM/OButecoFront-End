@@ -25,13 +25,10 @@
             <td>{{ estoque.dataCriacao }}</td>
             <td class="text-end ">
                 <div class="d-flex align-items-center justify-content-end">
-                    <button  type="button" class="btn text-success shadow-0" (click)="movimentacoes.emit(estoque)">
+                    <button  type="button" class="btn text-success shadow-0" (click)="mov.emit(estoque)">
                         <i class="fa-regular fa-square-plus fs-5"></i>
                     </button>
-                    <button  type="button" class="btn text-danger shadow-0" (click)="entrada.emit(estoque)">
-                        <i class="fa-regular fa-square-minus fs-5"></i>
-                    </button>
-                    <button type="button" class="btn text-primary shadow-0" (click)="mov.emit(estoque)">
+                    <button type="button" class="btn text-primary shadow-0" (click)="show.emit(estoque)">
                         <i class="fa-solid fa-arrow-right-arrow-left fs-6"></i>
                     </button>
                 </div>

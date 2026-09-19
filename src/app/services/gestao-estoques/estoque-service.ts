@@ -21,7 +21,7 @@ export class EstoqueService {
   }
 
   findById(id: number): Observable<Estoque> {
-    return this.http.get<Estoque>(`${this.API}`);
+    return this.http.get<Estoque>(`${this.API}/${id}`);
   }
 
   save(estoque: Estoque): Observable<string> {

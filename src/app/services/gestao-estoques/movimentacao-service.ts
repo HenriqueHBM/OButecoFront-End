@@ -18,4 +18,12 @@ export class MovimentacaoService {
   listAllByIdEstoque(id:number):Observable<Movimentacoes[]>{
     return this.http.get<Movimentacoes[]>(`${this.API}/historico/${id}`);
   }
+
+  saveEntrada(movimentacao: Movimentacoes): Observable<string> {
+    return this.http.post<string>(`${this.API}/entrada`, movimentacao, { responseType: 'text' as 'json' });
+  }
+
+  saveSaida(movimentacao: Movimentacoes): Observable<string> {
+    return this.http.post<string>(`${this.API}/saida`, movimentacao, { responseType: 'text' as 'json' });
+  }
 }

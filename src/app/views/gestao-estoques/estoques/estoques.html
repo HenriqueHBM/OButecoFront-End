@@ -16,10 +16,8 @@
   <div class="card card-body">
     <app-estoque-table
         [estoques]="list_estoques()"
-        (movimentacoes)="openMovimentacoes($event)"
-        (entrada)="openEntrada($event)"
-        (saida)="openSaida($event)"
-        (mov)="openMovimentacoes($event)"
+        (show)="openMovimentacoes($event)"
+        (mov)="openCadastrarMovimentacao($event)"
         >
 
     </app-estoque-table>
@@ -40,7 +38,7 @@
             type="button"
             class="btn-close"
             aria-label="Close"
-            (click)="modalMovRef.close()"
+            (click)="modalRef.close()"
         >
 
         </button>
@@ -49,5 +47,26 @@
         <app-movimentacao-table (retorno)="retornoMovimentacoes($event)" [idEstoque]="idEstoqueSelecionado()">
 
         </app-movimentacao-table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modalRef.close()">fechar</button>
+    </div>
+</ng-template>
+<ng-template #modalCadastrarMovimentacao>
+    <div class="modal-header">
+        <div class="modal-title">Cadastrar Movimentação</div>
+        <button 
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="modalRef.close()"
+        >
+
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-movimentacao-form [idEstoque]="idEstoqueSelecionado()" (retorno)="retornoCadastrarMovimentacao()">
+
+        </app-movimentacao-form>
     </div>
 </ng-template>

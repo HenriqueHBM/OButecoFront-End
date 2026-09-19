@@ -20,10 +20,11 @@ export class EstoqueTable {
 
   estoques = input<Estoque[]>([]);
 
-  movimentacoes = output<Estoque>();
-  entrada = output<Estoque>();
-  saida = output<Estoque>();
+  // movimentacoes = output<Estoque>();
+  // entrada = output<Estoque>();
+  // saida = output<Estoque>();
   mov = output<Estoque>();
+  show = output<Estoque>();
 
   idEstoqueSelecionado = signal<number>(0);
 
