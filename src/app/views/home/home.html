@@ -1,12 +1,40 @@
-<div class="container-fluid home-container">
-  <div class="row justify-content-center align-items-center">
-    <div class="col-lg-4">
-      <div class="card">
-        <div class="card-body" >
-          <!-- <a href="/admin/usuarios"></a> -->
-          <!-- <button type="button" class="btn btn-dark"  href="home/gestao_usuarios/usuarios" mdbRipple (click)="entrar()">Usuarios</button> -->
+<div class="container-fluid home-container p-5">
+  <div class="row justify-content-between">
+    <div class="col-md-4">
+      <a routerLink="gestao_produtos/produtos" class="home-card">
+        <div class="card text-center">
+          <div class="card-header py-5">
+            <i class="fa-solid fa-box fs-1 mb-3"></i>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title mb-0">Produtos</h5>
+          </div>
         </div>
-      </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a routerLink="gestao_estoques/estoques" class="home-card">
+        <div class="card text-center">
+          <div class="card-header py-5">
+            <i class="fa-solid fa-warehouse fs-1 mb-3"></i>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title mb-0">Estoques</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a routerLink="gestao_usuarios/usuarios" class="home-card">
+        <div class="card text-center">
+          <div class="card-header py-5">
+            <i class="fa-solid fa-users fs-1 mb-3"></i>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title mb-0">Usuários</h5>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 </div>

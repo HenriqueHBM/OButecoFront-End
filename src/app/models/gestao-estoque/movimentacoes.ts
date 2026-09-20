@@ -6,6 +6,9 @@ export class Movimentacoes {
     valorUnitario !: number;
     valorTotal !: number;
     fk_id_usuario !: number;
+    usuario !:string;
+    conversao !:string;
+    produto !:string;
     fk_id_conversao !: number;
     dataMovimentacao !: string;
     observacao !: string;
