@@ -1,8 +1,11 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Usuario } from '../../../../models/gestao-usuarios/usuario';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UsuarioService } from '../../../../services/gestao_usuarios/usuario-service';
+import { CARGOS_LABELS, CargosEnum } from '../../../../Enums/cargos-enum';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario-form',
@@ -13,6 +16,10 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 
 
 export class UsuarioForm implements OnInit {
+  private usuarioService = inject(UsuarioService);
+  protected readonly cargos = Object.values(CargosEnum);
+  protected readonly cargosLabels = CARGOS_LABELS;
+
   usuario: Usuario | null = null;
   myForm!: FormGroup;
 
@@ -22,6 +29,8 @@ export class UsuarioForm implements OnInit {
   ) {
   }
 
+
+
   isEditar(): boolean {
     return !!this.usuario?.id;
   }
@@ -30,57 +39,66 @@ export class UsuarioForm implements OnInit {
     this.myForm = this.fb.group({
       id: [this.usuario?.id],
       nome: [this.usuario?.nome, Validators.required],
-      cargo: [this.usuario?.cargo, Validators.required],
+      cargoEnum: [this.usuario?.cargoEnum, Validators.required],
       usuario: [this.usuario?.usuario, Validators.required],
       senha: [null]
     });
   }
 
+  campoInvalido(campo: string): boolean {
+    const controle = this.myForm.get(campo);
+    return !!controle && controle.invalid && controle.touched;
+  }
+
   onSubmit(e: Event) {
-    // e.preventDefault();
+    e.preventDefault();
+
+    if (this.myForm.invalid) {
+      this.myForm.markAllAsTouched();
+      return;
+    }
+
     const usuario: Usuario = this.myForm.value;
 
-    // console.log(usuario);
+    // Cadastrar
     if(usuario.id == null){
-      usuario.id = this.listarUsuarios().length + 1;
-      usuario.data_criacao = new Date().toLocaleDateString('pt-br');
-      usuario.status = true;
-      this.addNaLista(usuario)
-    }else{
-      let lista = this.listarUsuarios();
-      lista.forEach((element: Usuario, idx: number) => {
-          if(element.id == usuario.id){
-              usuario.status = element.status;
-              usuario.data_criacao = element.data_criacao;
-              lista.splice(idx, 1);
-          }
+      this.usuarioService.save(usuario).subscribe({
+        next: sucesso => {
+         Swal.fire({
+            icon: "success",
+            title: "Sucesso ao salvar"
+          })
+
+        },
+        error: erro =>{
+          Swal.fire({
+            icon: "info",
+            title: "Erro ao salvar",
+            text: "Parece que não foi possível salvar as informações de usuário"
+          });
+
+        }
       });
 
-      // let user = lista[usuario.id - 1];
-      // lista.splice(usuario.id - 1, 1);
-      
-      lista.push(usuario);
-      // this.addNaLista(usuario);
-      this.updateLista(lista);
-
+      // Editar
+    }else{
+      this.usuarioService.updateUsuario(usuario).subscribe({
+        next: sucesso => {
+          Swal.fire({
+            icon: "success",
+            title: "Sucesso ao salvar"
+          });
+        },
+        error: erro =>{
+          Swal.fire({
+            icon: "info",
+            title: "Erro ao salvar",
+            text: "Parece que não foi possível salvar as informações de usuário"
+          });
+        }
+      });
     }
 
     this.modalRef.close();
-    window.location.reload();
-  }
-
-  listarUsuarios(){
-    return JSON.parse(localStorage.getItem("lista_usuarios") ?? "[]");
-  }
-
-  addNaLista(usuario: Usuario){
-    let list_usuarios = this.listarUsuarios();
-    list_usuarios.push(usuario);
-    localStorage.setItem("lista_usuarios", JSON.stringify(list_usuarios));
-
-  }
-
-  updateLista(new_lista: []){
-    localStorage.setItem("lista_usuarios", JSON.stringify(new_lista));
   }
 }

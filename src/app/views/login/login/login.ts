@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,10 @@ export class Login {
     const dados = localStorage.getItem('lista_usuarios');
 
     if (!dados) {
-      alert('Nenhum usuário cadastrado');
+      Swal.fire({
+        icon: "info",
+        title: "Nenhum usuário cadastrado"
+      });
       return;
     }
 
@@ -31,9 +35,12 @@ export class Login {
     });
 
     if (encontrado) {
-      this.router.navigate(['/admin/home']);
+      this.router.navigate(['/home']);
     } else {
-      alert('Usuário ou senha estão incorretos');
+      Swal.fire({
+        icon: "error",
+        title: "Usuário ou senha estão incorretos"
+      });
     }
   }
 }

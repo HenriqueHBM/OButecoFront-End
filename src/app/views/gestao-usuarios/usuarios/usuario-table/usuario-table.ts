@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output, output } from '@angular/core';
 import { Usuario } from '../../../../models/gestao-usuarios/usuario';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import { UsuarioForm } from '../usuario-form/usuario-form';
+import { StatusEnum } from '../../../../Enums/status-enum';
 
 @Component({
   selector: 'app-usuario-table',
@@ -12,44 +11,26 @@ import { UsuarioForm } from '../usuario-form/usuario-form';
 
 
 export class UsuarioTable {
-  modalRef: MdbModalRef<UsuarioForm> | null = null;
-  
-  list_usuarios: Usuario[] = JSON.parse(localStorage.getItem("lista_usuarios") ?? "[]");
-  
-  constructor(
-    private modalService: MdbModalService
-  ) { }
+  protected readonly status = StatusEnum;
+  // @Input("usuarios") usuarios :Usuario[] = [];
+  // Nova forma 
+  usuarios = input<Usuario[]>([]);
 
-  openEditar(id: number) {
-    let usuario = this.findById(id);
-    
-    this.modalRef = this.modalService.open(UsuarioForm, {
-      modalClass: 'modal-lg',
-      data: {
-        usuario: usuario
-      }
-    });
+  formatarData(data: string): string {
+    const date = new Date(data);
+    const dia = String(date.getDate()).padStart(2, '0');
+    const mes = String(date.getMonth() + 1).padStart(2, '0');
+    const ano = date.getFullYear();
+    return `${dia}/${mes}/${ano}`;
   }
 
-  changeStatus(usuario: Usuario) {
-    if (confirm(`Deseja mesmo ${usuario.status ? "Inativar" : "Ativar"} eses usuário?`)) {
-      this.list_usuarios.forEach((index, value) => {
-        if(index.id == usuario.id){
-          index.status = !usuario.status;
-        }
-      })
-    }
-  }
+  // @Output("editar") editar = new EventEmitter<Usuario>();
+  // @Output("editar") editar = new EventEmitter<Usuario>();
+  // @Output("changeStatus") changeStatus = new EventEmitter<Usuario>();
+  // @Output("excluir") excluir = new EventEmitter<Usuario>();
 
-  findById(id_desejado:number){
-    let usuario = null;
-    this.list_usuarios.forEach((value, index) => {
-        if(value.id == id_desejado){
-          usuario = value;
-        }
-      })
-
-      return usuario;
-      
-  }
+  // Nova forma
+  editar = output<Usuario>();
+  changeStatus = output<Usuario>();
+  excluir = output<Usuario>();
 }

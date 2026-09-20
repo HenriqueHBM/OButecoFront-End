@@ -1,18 +1,28 @@
 import { Routes } from '@angular/router';
 import { Login } from './views/login/login/login';
-import { Home } from './views/home/home';
 import { Usuarios } from './views/gestao-usuarios/usuarios/usuarios';
 import { PrincipalComponent } from './views/principal/principal.component';
+import { Produtos } from './views/gestao-produtos/produtos/produtos';
+import { Estoques } from './views/gestao-estoques/estoques/estoques';
+import { Home } from './views/home/home';
 
 export const routes: Routes =
 [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'login', component: Login},
-  { path: 'home', component: PrincipalComponent, children:
-    [
-      // {path: 'home', component: Home},
-      {path: 'usuarios', component: Usuarios}
+  { path: 'home', component: PrincipalComponent,
+    children: [
+      // Home
+      {path: '', component: Home},
 
+      // Usuarios
+      {path: 'gestao_usuarios/usuarios', component: Usuarios},
+
+      // Produtos
+      {path: "gestao_produtos/produtos", component: Produtos},
+
+      // Estoque
+      {path: "gestao_estoques/estoques", component: Estoques}
     ]
   }
 ];

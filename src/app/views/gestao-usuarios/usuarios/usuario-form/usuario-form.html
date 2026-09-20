@@ -12,26 +12,35 @@
       <div class="col">
         <input type="hidden" name="id" formControlName="id" >
         <mdb-form-control>
-          <input mdbInput type="text" id="nome" class="form-control" value="{{ usuario?.nome }}" formControlName="nome" />
+          <input mdbInput type="text" id="nome" class="form-control" [class.is-invalid]="campoInvalido('nome')" required value="{{ usuario?.nome }}" formControlName="nome" />
           <label mdbLabel class="form-label" for="form3Example1">Nome</label>
         </mdb-form-control>
-        
+        <div class="invalid-feedback">Nome é obrigatório</div>
       </div>
       <div class="col">
-        <select class="form-control" required value="{{ usuario?.cargo }}" formControlName="cargo" >
+        <select class="form-control" [class.is-invalid]="campoInvalido('cargoEnum')" required formControlName="cargoEnum" >
           <option value="null" >Selecione uma opção</option>
-          <option value="Líder">Líder</option>
-          <option value="Admin">Admin</option>
-          <option value="Gerente">Gerente</option>
+          @for (item of cargos; track $index) {
+            <option [value]="item">{{ cargosLabels[item] }}</option>
+            <!-- @if (item.id == usuario?.cargo) {
+              <option value="{{ item.id }}" selected>{{ item.cargo }}</option>
+            }
+            @else {
+                <option value="{{ item.id }}" >{{ item.cargo }}</option>
+            } -->
+
+          }
         </select>
+        <div class="invalid-feedback">Cargo é obrigatório</div>
       </div>
     </div>
     <div class="row mb-4">
       <div class="col">
         <mdb-form-control>
-          <input mdbInput type="text" id="usuario" class="form-control" value="{{ usuario?.usuario }}" formControlName="usuario" />
+          <input mdbInput type="text" id="usuario" class="form-control" [class.is-invalid]="campoInvalido('usuario')" required value="{{ usuario?.usuario }}" formControlName="usuario" />
           <label mdbLabel class="form-label" for="form3Example1">Usuário</label>
         </mdb-form-control>
+        <div class="invalid-feedback">Usuário é obrigatório</div>
       </div>
       <div class="col">
         <mdb-form-control>
