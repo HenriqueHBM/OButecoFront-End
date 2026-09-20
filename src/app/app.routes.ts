@@ -4,13 +4,17 @@ import { Usuarios } from './views/gestao-usuarios/usuarios/usuarios';
 import { PrincipalComponent } from './views/principal/principal.component';
 import { Produtos } from './views/gestao-produtos/produtos/produtos';
 import { Estoques } from './views/gestao-estoques/estoques/estoques';
+import { Home } from './views/home/home';
 
 export const routes: Routes =
 [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'login', component: Login},
-  { path: 'home', component: PrincipalComponent, 
+  { path: 'home', component: PrincipalComponent,
     children: [
+      // Home
+      {path: '', component: Home},
+
       // Usuarios
       {path: 'gestao_usuarios/usuarios', component: Usuarios},
 

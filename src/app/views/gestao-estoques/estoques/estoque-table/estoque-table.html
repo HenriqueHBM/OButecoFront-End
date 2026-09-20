@@ -22,7 +22,7 @@
             <td>{{ estoque.qtdeEstoque }}</td>
             <td>{{ estoque.local }}</td>
            
-            <td>{{ estoque.dataCriacao }}</td>
+            <td>{{ formatarData(estoque.dataCriacao) }}</td>
             <td class="text-end ">
                 <div class="d-flex align-items-center justify-content-end">
                     <button  type="button" class="btn text-success shadow-0" (click)="mov.emit(estoque)">

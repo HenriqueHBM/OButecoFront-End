@@ -34,7 +34,7 @@
                     </span>
                 }
             </td>
-            <td>{{ user.created_at }}</td>
+            <td>{{ formatarData(user.created_at) }}</td>
             <td class="text-end ">
                 <div class="d-flex align-items-center justify-content-end">
                     <button type="button" class="btn text-warning shadow-0" (click)="editar.emit(user)">
