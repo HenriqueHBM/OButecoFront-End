@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Movimentacoes } from '../../models/gestao-estoque/movimentacoes';
+import { MovimentacaoRequest, Movimentacoes } from '../../models/gestao-estoque/movimentacoes';
 
 @Injectable({
   providedIn: 'root',
@@ -19,11 +19,11 @@ export class MovimentacaoService {
     return this.http.get<Movimentacoes[]>(`${this.API}/historico/${id}`);
   }
 
-  saveEntrada(movimentacao: Movimentacoes): Observable<string> {
+  saveEntrada(movimentacao: MovimentacaoRequest): Observable<string> {
     return this.http.post<string>(`${this.API}/entrada`, movimentacao, { responseType: 'text' as 'json' });
   }
 
-  saveSaida(movimentacao: Movimentacoes): Observable<string> {
+  saveSaida(movimentacao: MovimentacaoRequest): Observable<string> {
     return this.http.post<string>(`${this.API}/saida`, movimentacao, { responseType: 'text' as 'json' });
   }
 }

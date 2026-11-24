@@ -1,6 +1,6 @@
 import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { Movimentacoes } from '../../../../models/gestao-estoque/movimentacoes';
+import { MovimentacaoRequest } from '../../../../models/gestao-estoque/movimentacoes';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Estoque } from '../../../../models/gestao-estoque/estoque';
 import { EstoqueService } from '../../../../services/gestao-estoques/estoque-service';
@@ -19,7 +19,7 @@ export class MovimentacaoForm implements OnInit {
 
   myForm!: FormGroup;
   idEstoque = input<number>(0);
-  retorno = output<Movimentacoes>();
+  retorno = output<MovimentacaoRequest>();
 
   estoque = signal<Estoque>(new Estoque());
 
@@ -32,10 +32,10 @@ export class MovimentacaoForm implements OnInit {
       next: estoqueBack => {
         this.estoque.set(estoqueBack);
         // a resposta chega depois do form já montado, entao preenchemos aqui
+        // o usuário não é mais enviado: o back identifica pelo token
         this.myForm.patchValue({
-          fk_id_produto: estoqueBack.fk_id_produto,
+          fk_id_produto: estoqueBack.fk_id_product,
           local: estoqueBack.local,
-          fk_id_usuario: 1, //setado 1 pois não temos usuario logado ainda 
           fk_id_estoque: estoqueBack.id
         });
       },
@@ -53,9 +53,8 @@ export class MovimentacaoForm implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
-      fk_id_produto: [this.estoque().fk_id_produto, Validators.required],
+      fk_id_produto: [this.estoque().fk_id_product, Validators.required],
       local: [this.estoque().local, Validators.required],
-      fk_id_usuario: [1, Validators.required],
       fk_id_estoque: [this.estoque().id, Validators.required],
       tipo: [null, Validators.required],
       qtde: [null, Validators.required],
@@ -81,7 +80,7 @@ export class MovimentacaoForm implements OnInit {
       return;
     }
 
-    const movimentacao: Movimentacoes = this.myForm.value;
+    const movimentacao: MovimentacaoRequest = this.myForm.value;
 
     if (movimentacao.tipo == 'TIPO_ENTRADA') {
       this.movimentacaoService.saveEntrada(movimentacao).subscribe({
