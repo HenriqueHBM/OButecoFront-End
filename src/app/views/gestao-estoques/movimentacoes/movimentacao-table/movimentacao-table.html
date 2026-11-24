@@ -21,14 +21,14 @@
     @for (estoque of list_movimentacoes(); track $index) {
         <tr>
           <td>{{ estoque.id }}</td>
-          <td>{{ estoque.tipo }}</td>
-          <td>{{ estoque.qtde }}</td>
-          <td>{{ estoque.valorUnitario }}</td>
-          <td>{{ estoque.valorTotal }}</td>
-          <td>{{ estoque.usuario }}</td>
-          <td>{{ estoque.conversao }}</td>
-          <td>{{ estoque.observacao }}</td>
-          <td>{{ formatarData(estoque.dataMovimentacao) }}</td>
+          <td>{{ estoque.type }}</td>
+          <td>{{ estoque.quantity }}</td>
+          <td>{{ estoque.unitPrice }}</td>
+          <td>{{ estoque.totalPrice }}</td>
+          <td>{{ estoque.user }}</td>
+          <td>{{ estoque.conversion }}</td>
+          <td>{{ estoque.observation }}</td>
+          <td>{{ formatarData(estoque.movDate) }}</td>
         </tr>
     }
   </tbody>

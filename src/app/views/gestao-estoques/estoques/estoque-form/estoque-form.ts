@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { EstoqueService } from '../../../../services/gestao-estoques/estoque-service';
 import { ProdutoService } from '../../../../services/gestao-produtos/produto-service';
 import { Produto } from '../../../../models/gestao-produtos/produto';
-import { Estoque } from '../../../../models/gestao-estoque/estoque';
+import { EstoqueRequest } from '../../../../models/gestao-estoque/estoque';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -65,7 +65,7 @@ export class EstoqueForm implements OnInit {
       return;
     }
 
-    const estoque: Estoque = this.myForm.value;
+    const estoque: EstoqueRequest = this.myForm.value;
 
     this.estoqueService.save(estoque).subscribe({
       next: () => {
