@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, input, Output, output } from '@angular/core';
 import { Usuario } from '../../../../models/gestao-usuarios/usuario';
 import { StatusEnum } from '../../../../Enums/status-enum';
+import { CARGOS_LABELS } from '../../../../Enums/cargos-enum';
 
 @Component({
   selector: 'app-usuario-table',
@@ -12,6 +13,7 @@ import { StatusEnum } from '../../../../Enums/status-enum';
 
 export class UsuarioTable {
   protected readonly status = StatusEnum;
+  protected readonly cargosLabels = CARGOS_LABELS;
   // @Input("usuarios") usuarios :Usuario[] = [];
   // Nova forma 
   usuarios = input<Usuario[]>([]);

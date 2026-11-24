@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Usuario } from '../../models/gestao-usuarios/usuario';
+import { Usuario, UsuarioRequest } from '../../models/gestao-usuarios/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -24,10 +24,10 @@ export class UsuarioService {
   }
 
   findById(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.API}`);
+    return this.http.get<Usuario>(`${this.API}/${id}`);
   }
 
-  save(usuario: Usuario): Observable<string> {
+  save(usuario: UsuarioRequest): Observable<string> {
     // post(verbo), <string> (retorno), this.API/save (enpoit), usuarios (body), responseType (parametros)
     return this.http.post<string>(`${this.API}`, usuario, { responseType: 'text' as 'json' });
   }
@@ -36,7 +36,7 @@ export class UsuarioService {
     return this.http.patch<string>(`${this.API}/change_status/${id}`,null);
   }
 
-  updateUsuario(usuario: Usuario): Observable<string>{
+  updateUsuario(usuario: UsuarioRequest): Observable<string>{
     return this.http.put<string>(`${this.API}/${usuario.id}`, usuario, { responseType: 'text' as 'json' });
   }
   

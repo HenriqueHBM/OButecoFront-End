@@ -12,7 +12,7 @@
       <div class="col">
         <input type="hidden" name="id" formControlName="id" >
         <mdb-form-control>
-          <input mdbInput type="text" id="nome" class="form-control" [class.is-invalid]="campoInvalido('nome')" required value="{{ usuario?.nome }}" formControlName="nome" />
+          <input mdbInput type="text" id="nome" class="form-control" [class.is-invalid]="campoInvalido('nome')" required formControlName="nome" />
           <label mdbLabel class="form-label" for="form3Example1">Nome</label>
         </mdb-form-control>
         <div class="invalid-feedback">Nome é obrigatório</div>
@@ -37,7 +37,7 @@
     <div class="row mb-4">
       <div class="col">
         <mdb-form-control>
-          <input mdbInput type="text" id="usuario" class="form-control" [class.is-invalid]="campoInvalido('usuario')" required value="{{ usuario?.usuario }}" formControlName="usuario" />
+          <input mdbInput type="text" id="usuario" class="form-control" [class.is-invalid]="campoInvalido('usuario')" required formControlName="usuario" />
           <label mdbLabel class="form-label" for="form3Example1">Usuário</label>
         </mdb-form-control>
         <div class="invalid-feedback">Usuário é obrigatório</div>

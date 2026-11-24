@@ -20,8 +20,9 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
 
   return next(request).pipe(
     catchError((err) => {
-      // token inválido/expirado ou sem permissão: limpa e volta pro login
-      if (err instanceof HttpErrorResponse && (err.status === 401 || err.status === 403) && !requisicao_login) {
+      // 401 = token inválido/expirado: limpa e volta pro login
+      // 403 = logado, mas o cargo não tem permissão: não desloga, a tela trata o erro
+      if (err instanceof HttpErrorResponse && err.status === 401 && !requisicao_login) {
         auth.logout();
         router.navigate(['/login']);
       }

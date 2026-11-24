@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Estoque } from '../../models/gestao-estoque/estoque';
+import { Estoque, EstoqueRequest } from '../../models/gestao-estoque/estoque';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class EstoqueService {
     return this.http.get<Estoque>(`${this.API}/${id}`);
   }
 
-  save(estoque: Estoque): Observable<string> {
+  save(estoque: EstoqueRequest): Observable<string> {
     // post(verbo), <string> (retorno), this.API/save (enpoit), estoques (body), responseType (parametros)
     return this.http.post<string>(`${this.API}`, estoque, { responseType: 'text' as 'json' });
   }

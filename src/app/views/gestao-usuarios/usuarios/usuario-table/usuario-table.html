@@ -19,9 +19,9 @@
     @for (user of usuarios(); track $index) {
         <tr>
             <td>{{ user.id }}</td>
-            <td>{{ user.nome }}</td>
-            <td>{{ user.usuario }}</td>
-            <td>{{ user.cargoEnum }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.user }}</td>
+            <td>{{ cargosLabels[user.role] }}</td>
             <td>
                 @if(user.status == status.ATIVO){
                     <span class="badge badge-success rounded-pill p-2 px-3">
@@ -34,7 +34,7 @@
                     </span>
                 }
             </td>
-            <td>{{ formatarData(user.created_at) }}</td>
+            <td>{{ formatarData(user.creationDate) }}</td>
             <td class="text-end ">
                 <div class="d-flex align-items-center justify-content-end">
                     <button type="button" class="btn text-warning shadow-0" (click)="editar.emit(user)">
