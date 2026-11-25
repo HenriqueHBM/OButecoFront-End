@@ -1,14 +1,16 @@
 import { Routes } from '@angular/router';
 import { Login } from './views/login/login/login';
 import { PrincipalComponent } from './views/principal/principal.component';
+import { authGuard } from './guards/auth.guard';
+import { guestGuard } from './guards/guest.guard';
 
 // As telas internas usam lazy loading (loadComponent): cada uma só é baixada
 // quando o usuário entra nela, deixando o carregamento inicial do app menor.
 export const routes: Routes =
 [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
-  { path: 'login', component: Login},
-  { path: 'home', component: PrincipalComponent,
+  { path: 'login', component: Login, canActivate:[guestGuard]},
+  { path: 'home', component: PrincipalComponent, canActivate: [authGuard], canActivateChild: [authGuard],
     children: [
       // Home
       {path: '', loadComponent: () => import('./views/home/home').then(m => m.Home)},
@@ -22,5 +24,7 @@ export const routes: Routes =
       // Estoque
       {path: "gestao_estoques/estoques", loadComponent: () => import('./views/gestao-estoques/estoques/estoques').then(m => m.Estoques)}
     ]
-  }
+  },
+  // qualquer URL desconhecida volta para o início (hoje dá tela em branco)
+  { path: '**', redirectTo: 'login' }
 ];
