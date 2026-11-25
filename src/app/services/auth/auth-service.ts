@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
 import { ResponseAuth } from '../../models/auth/responseAuth';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { ResponseAuth } from '../../models/auth/responseAuth';
 export class AuthService {
 
   private http = inject(HttpClient);
-  private API = "http://localhost:8080";
+  private API = `${environment.apiUrl}`;
 
   accessToken = signal(sessionStorage.getItem('token') ?? '');
 

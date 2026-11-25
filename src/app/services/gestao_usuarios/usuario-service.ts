@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario, UsuarioRequest } from '../../models/gestao-usuarios/usuario';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class UsuarioService {
   http = inject(HttpClient);
 
   //boa pratica
-  API = "http://localhost:8080/usuarios";
+  API = `${environment.apiUrl}/usuarios`;
 
   constructor() { }
 
