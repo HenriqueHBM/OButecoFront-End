@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Estoque, EstoqueRequest } from '../../models/gestao-estoque/estoque';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class EstoqueService {
   http = inject(HttpClient);
 
   //boa pratica
-  API = "http://localhost:8080/estoques";
+  API = `${environment.apiUrl}/estoques`;
 
   constructor() { }
 
