@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MovimentacaoRequest, Movimentacoes } from '../../models/gestao-estoque/movimentacoes';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class MovimentacaoService {
   http = inject(HttpClient);
 
   //boa pratica
-  API = "http://localhost:8080/estoques/movimentacoes";
+  API = `${environment.apiUrl}/estoques/movimentacoes`;
 
   constructor(){}
 
