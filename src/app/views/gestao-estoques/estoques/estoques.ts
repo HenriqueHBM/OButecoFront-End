@@ -10,6 +10,7 @@ import { MovimentacaoTable } from '../movimentacoes/movimentacao-table/movimenta
 import { MovimentacaoForm } from '../movimentacoes/movimentacao-form/movimentacao-form';
 import { AuthService } from '../../../services/auth/auth-service';
 import { CargosEnum } from '../../../Enums/cargos-enum';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-estoques',
@@ -49,7 +50,7 @@ export class Estoques {
 
       },
       // qualquer erro no banco retorna aqui
-      error: erro => {
+            error: (erro: HttpErrorResponse) => {
         if (erro.status === 401 || erro.status === 403) return;
         console.log(erro);
 

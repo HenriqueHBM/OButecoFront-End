@@ -69,8 +69,8 @@ export class ProdutoForm implements OnInit {
           Swal.fire({
             icon: "success",
             title: "Sucesso ao salvar"
-          })
-
+          });
+          this.modalRef.close();
         },
         error: erro => {
           // alert("Erro ao salvar");
@@ -80,9 +80,9 @@ export class ProdutoForm implements OnInit {
               icon: "info",
               title: "Erro ao salvar",
               text: "Parece que não foi possível salvar as informações de produto"
-            })
+            });
         }
-      })
+      });
     } else {
         this.produtoService.updateProduto(produto).subscribe({
           next: sucesso => {
@@ -90,6 +90,7 @@ export class ProdutoForm implements OnInit {
               icon: "success",
               title: "Sucesso ao salvar"
             });
+            this.modalRef.close();
           },
           error: erro =>{
             Swal.fire({
@@ -101,6 +102,5 @@ export class ProdutoForm implements OnInit {
           }
         })
     }
-    this.modalRef.close();
   }
 }
