@@ -1,3 +1,5 @@
+
+import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Component, computed, inject, signal } from '@angular/core';
 import { UsuarioForm } from './usuario-form/usuario-form';
@@ -37,11 +39,11 @@ export class Usuarios {
       next: lista => {
         // this.list_usuarios = lista;
         this.list_usuarios.set(lista);
-
-
       },
       // qualquer erro no banco retorna aqui
-      error: erro => {
+      error: (erro: HttpErrorResponse) => {
+        if (erro.status === 401 || erro.status === 403) return;
+
         Swal.fire({
           icon: "error",
           title: "Conexão com o Banco",
@@ -91,7 +93,9 @@ export class Usuarios {
             });
             this.listarUsuarios();
           },
-          error: erro => {
+          error: (erro: HttpErrorResponse) => {
+            if (erro.status === 401 || erro.status === 403) return;
+
             Swal.fire({
               icon: "info",
               title: "Erro ao salvar",
@@ -132,7 +136,9 @@ export class Usuarios {
             });
             this.listarUsuarios();
           },
-          error: erro => {
+          error: (erro: HttpErrorResponse) => {
+            if (erro.status === 401 || erro.status === 403) return;
+
             Swal.fire({
               icon: "info",
               title: "Erro ao excluir",

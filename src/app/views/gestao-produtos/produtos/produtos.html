@@ -6,9 +6,11 @@
         <span class="text-muted text-break"> Tela para controle dos produto ao sistema </span>
       </div>
       <div class="col md-6 d-flex justify-content-end text-end align-items-center ">
-        <button class="btn btn-success" (click)="openCadastrar()">
-          <i class="fa-solid fa-plus me-1"></i> Cadastrar
-        </button>
+        @if (auth.temCargo(cargos.Gerente)) {
+          <button class="btn btn-success" (click)="openCadastrar()">
+            <i class="fa-solid fa-plus me-1"></i> Cadastrar
+          </button>
+        }
       </div>
     </div>
   </div>

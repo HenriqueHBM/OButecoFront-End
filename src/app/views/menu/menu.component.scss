@@ -1,21 +1,66 @@
+
+/* Menu principal */
 .navbar {
-  background: #FFC40C;
-  padding: 12px 25px;
-  min-height: 70px;
+  width: 100%;
+  min-height: 4.5rem;
+  background: #FFC107 !important;
+  display: flex;
+  align-items: center;
+  padding: 0 2.5rem;
 }
-.navbar .navbar-brand {
-  color: #222;
-  font-size: 3vh;
-  font-weight: bold;
+
+/* Container */
+.navbar .container-fluid {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
+
+/* Nome O Buteco */
+.navbar-brand {
+  color: #29251F !important;
+  font-size: 1.5rem !important;
+  font-weight: 700;
+  text-decoration: none;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Área dos links */
+.navbar-collapse {
+  display: flex;
+  align-items: center;
+}
+
+/* Opções de navegação */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem !important;
+  margin-left: auto !important;
+  margin-right: 2rem !important;
+}
+
+/* Links das abas */
 .navbar .nav-link {
-  color: #222 !important;
-  font-size: 2.5vh;
-  font-weight: 500;
+  color: #29251F !important;
+  text-decoration: none;
+  font-size: 1.2rem !important;
+  font-weight: 600;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.3rem;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
 }
-.navbar .nav-item {
-  margin-right: 10px;
+
+/* Efeito ao passar o mouse */
+.navbar .nav-link:hover {
+  background: #29251F;
+  color: #FFC107 !important;
 }
-.navbar .me-auto {
-  margin-right: 0 !important;
+
+/* Sair */
+.navbar-collapse > .nav-link {
+  margin-left: 0;
 }

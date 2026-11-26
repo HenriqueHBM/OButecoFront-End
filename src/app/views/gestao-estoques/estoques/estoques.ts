@@ -8,6 +8,9 @@ import { Location } from '@angular/common';
 import { EstoqueTable } from './estoque-table/estoque-table';
 import { MovimentacaoTable } from '../movimentacoes/movimentacao-table/movimentacao-table';
 import { MovimentacaoForm } from '../movimentacoes/movimentacao-form/movimentacao-form';
+import { AuthService } from '../../../services/auth/auth-service';
+import { CargosEnum } from '../../../Enums/cargos-enum';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-estoques',
@@ -16,6 +19,8 @@ import { MovimentacaoForm } from '../movimentacoes/movimentacao-form/movimentaca
   styleUrl: './estoques.scss',
 })
 export class Estoques {
+  protected auth = inject(AuthService);
+  protected readonly cargos = CargosEnum;
   private estoquesService = inject(EstoqueService);
   // modalRef: MdbModalRef<EstoqueForm> | null = null;
 
@@ -45,8 +50,8 @@ export class Estoques {
 
       },
       // qualquer erro no banco retorna aqui
-      error: erro => {
-        console.log(erro);
+        error: (erro: HttpErrorResponse) => {
+        if (erro.status === 401 || erro.status === 403) return;
 
         Swal.fire({
           icon: "error",

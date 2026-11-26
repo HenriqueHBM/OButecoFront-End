@@ -41,7 +41,7 @@ export class UsuarioForm implements OnInit {
       nome: [this.usuario?.name, Validators.required],
       cargoEnum: [this.usuario?.role, Validators.required],
       usuario: [this.usuario?.user, Validators.required],
-      senha: [null]
+      senha: [null, this.isEditar() ? [] : [Validators.required,  Validators.minLength(6)]]
     });
   }
 
@@ -59,35 +59,15 @@ export class UsuarioForm implements OnInit {
     }
 
     const usuario: UsuarioRequest = this.myForm.value;
+    const requisicao = usuario.id == null ? this.usuarioService.save(usuario) : this.usuarioService.updateUsuario(usuario);
 
-    // Cadastrar
-    if(usuario.id == null){
-      this.usuarioService.save(usuario).subscribe({
-        next: sucesso => {
-         Swal.fire({
-            icon: "success",
-            title: "Sucesso ao salvar"
-          })
-
-        },
-        error: erro =>{
-          Swal.fire({
-            icon: "info",
-            title: "Erro ao salvar",
-            text: "Parece que não foi possível salvar as informações de usuário"
-          });
-
-        }
-      });
-
-      // Editar
-    }else{
-      this.usuarioService.updateUsuario(usuario).subscribe({
-        next: sucesso => {
+      requisicao.subscribe({
+        next: () => {
           Swal.fire({
             icon: "success",
             title: "Sucesso ao salvar"
           });
+          this.modalRef.close();
         },
         error: erro =>{
           Swal.fire({
@@ -97,8 +77,5 @@ export class UsuarioForm implements OnInit {
           });
         }
       });
-    }
-
-    this.modalRef.close();
   }
 }

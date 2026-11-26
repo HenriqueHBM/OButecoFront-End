@@ -14,7 +14,6 @@ import { authInterceptor } from './services/auth/auth.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideAnimations(),
     provideAnimationsAsync(),
     importProvidersFrom(MdbModalModule),
     provideAnimations(),

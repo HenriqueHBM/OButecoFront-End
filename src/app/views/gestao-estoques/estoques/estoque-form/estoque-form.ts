@@ -73,6 +73,7 @@ export class EstoqueForm implements OnInit {
           icon: "success",
           title: "Sucesso ao salvar"
         });
+        this.modalRef.close();
       },
       error: erro => {
         Swal.fire({
@@ -82,7 +83,5 @@ export class EstoqueForm implements OnInit {
         });
       }
     });
-
-    this.modalRef.close();
   }
 }
