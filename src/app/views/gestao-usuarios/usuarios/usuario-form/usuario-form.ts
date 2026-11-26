@@ -41,7 +41,7 @@ export class UsuarioForm implements OnInit {
       nome: [this.usuario?.name, Validators.required],
       cargoEnum: [this.usuario?.role, Validators.required],
       usuario: [this.usuario?.user, Validators.required],
-      senha: [null, this.isEditar() ? [] : Validators.required]
+      senha: [null, this.isEditar() ? [] : [Validators.required,  Validators.minLength(6)]]
     });
   }
 

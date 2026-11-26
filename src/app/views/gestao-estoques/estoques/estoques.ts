@@ -50,9 +50,8 @@ export class Estoques {
 
       },
       // qualquer erro no banco retorna aqui
-            error: (erro: HttpErrorResponse) => {
+        error: (erro: HttpErrorResponse) => {
         if (erro.status === 401 || erro.status === 403) return;
-        console.log(erro);
 
         Swal.fire({
           icon: "error",

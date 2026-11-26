@@ -40,7 +40,6 @@ export class MovimentacaoForm implements OnInit {
         });
       },
       error: erro => {
-        console.log(erro);
 
         Swal.fire({
           icon: "error",
