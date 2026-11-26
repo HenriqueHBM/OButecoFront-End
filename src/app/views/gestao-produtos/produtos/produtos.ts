@@ -1,3 +1,5 @@
+
+import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Component, computed, inject, signal } from '@angular/core';
 import { ProdutoForm } from './produto-form/produto-form';
@@ -7,6 +9,8 @@ import { Location } from '@angular/common';
 import { Produto } from '../../../models/gestao-produtos/produto';
 import { ProdutoService } from '../../../services/gestao-produtos/produto-service';
 import { StatusEnum } from '../../../Enums/status-enum';
+import { AuthService } from '../../../services/auth/auth-service';
+import { CargosEnum } from '../../../Enums/cargos-enum';
 
 @Component({
   selector: 'app-produtos',
@@ -15,6 +19,9 @@ import { StatusEnum } from '../../../Enums/status-enum';
   styleUrl: './produtos.scss',
 })
 export class Produtos {
+  protected auth = inject(AuthService);
+  protected readonly cargos = CargosEnum;
+
   private produtoService = inject(ProdutoService);
   modalRef: MdbModalRef<ProdutoForm> | null = null;
   list_produtos = signal<Produto[]>([]);
@@ -35,15 +42,18 @@ export class Produtos {
         this.list_produtos.set(lista);
       },
 
-      error: (erro: unknown) => {
+      error: (erro: HttpErrorResponse) => {
+        if (erro.status === 401 || erro.status === 403) return;
+
         Swal.fire({
           icon: "error",
           title: "Conexão com o Banco",
           text: "Parece que a conexão com o banco foi perdia"
-        })
+        });
       },
     });
   }
+
   openCadastrar() {
     this.modalRef = this.modalService.open(ProdutoForm, {
       modalClass: 'modal-lg'
@@ -84,7 +94,9 @@ export class Produtos {
             });
             this.listarProdutos();
           },
-          error: (erro: unknown) => {
+          error: (erro: HttpErrorResponse) => {
+            if (erro.status === 401 || erro.status === 403) return;
+
             Swal.fire({
               icon: "info",
               title: "Erro ao salvar",
@@ -95,6 +107,7 @@ export class Produtos {
       }
     });
   }
+
   findById(id_desejado: number) {
     let produto = null;
   }
@@ -116,7 +129,9 @@ export class Produtos {
             });
             this.listarProdutos();
           },
-          error: erro => {
+          error: (erro: HttpErrorResponse) => {
+            if (erro.status === 401 || erro.status === 403) return;
+
             Swal.fire({
               icon: "info",
               title: "Erro ao excluir",

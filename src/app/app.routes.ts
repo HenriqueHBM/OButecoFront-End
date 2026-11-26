@@ -3,6 +3,8 @@ import { Login } from './views/login/login/login';
 import { PrincipalComponent } from './views/principal/principal.component';
 import { authGuard } from './guards/auth.guard';
 import { guestGuard } from './guards/guest.guard';
+import { CargosEnum } from './Enums/cargos-enum';
+import { roleGuard } from './guards/role.guard';
 
 // As telas internas usam lazy loading (loadComponent): cada uma só é baixada
 // quando o usuário entra nela, deixando o carregamento inicial do app menor.
@@ -16,7 +18,7 @@ export const routes: Routes =
       {path: '', loadComponent: () => import('./views/home/home').then(m => m.Home)},
 
       // Usuarios
-      {path: 'gestao_usuarios/usuarios', loadComponent: () => import('./views/gestao-usuarios/usuarios/usuarios').then(m => m.Usuarios)},
+      {path: 'gestao_usuarios/usuarios',canActivate: [roleGuard], data: { cargo: CargosEnum.Admin }, loadComponent: () => import('./views/gestao-usuarios/usuarios/usuarios').then(m => m.Usuarios)},
 
       // Produtos
       {path: "gestao_produtos/produtos", loadComponent: () => import('./views/gestao-produtos/produtos/produtos').then(m => m.Produtos)},

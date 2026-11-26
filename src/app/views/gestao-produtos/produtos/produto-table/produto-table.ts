@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, input, Output, output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Input, input, Output, output } from '@angular/core';
 import { Produto } from '../../../../models/gestao-produtos/produto';
 import { StatusEnum } from '../../../../Enums/status-enum';
+import { AuthService } from '../../../../services/auth/auth-service';
+import { CargosEnum } from '../../../../Enums/cargos-enum';
 
 @Component({
   selector: 'app-produto-table',
@@ -9,7 +11,11 @@ import { StatusEnum } from '../../../../Enums/status-enum';
   styleUrl: './produto-table.scss',
 })
 export class ProdutoTable {
+  protected auth = inject(AuthService);
+  protected readonly cargos = CargosEnum;
   protected readonly status = StatusEnum;
+  protected podeEditar = computed(() => this.auth.temCargo(CargosEnum.Gerente));
+
   produtos  = input<Produto[]>([]);
 
   formatarData(data: string): string {

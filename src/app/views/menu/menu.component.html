@@ -9,9 +9,10 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="admin/usuarios" routerLink="/home/gestao_estoques/estoques">Estoques</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="admin/usuarios" routerLink="/home/gestao_usuarios/usuarios">Usuarios</a>
-        </li>
+        @if (auth.temCargo(cargos.Admin)) {
+         <li class="nav-item"> 
+          <a class="nav-link" routerLink="/home/gestao_usuarios/usuarios">Usuarios</a> 
+        </li> }
       </ul>
       <button type="button" class="btn btn-link nav-link" (click)="sair()">Sair</button>
     </div>

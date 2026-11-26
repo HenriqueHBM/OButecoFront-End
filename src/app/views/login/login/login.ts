@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../../services/auth/auth-service';
 import { Auth } from '../../../models/auth/auth';
@@ -16,6 +16,7 @@ import { Auth } from '../../../models/auth/auth';
 export class Login {
   private loginService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute); 
 
   myForm = inject(FormBuilder).nonNullable.group({
     usuario: ['', Validators.required],
@@ -37,7 +38,10 @@ export class Login {
 
     const { usuario, senha }: Auth = this.myForm.getRawValue();
     this.loginService.login(usuario, senha).subscribe({
-      next: () => this.router.navigate(['/home']),
+      next: () => {
+        const destino = this.route.snapshot.queryParamMap.get('returnUrl');
+         this.router.navigateByUrl(destino?.startsWith('/home') ? destino : '/home');
+      },
       error: (err: HttpErrorResponse) => {
         Swal.fire({
           icon: "error",
