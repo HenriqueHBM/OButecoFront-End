@@ -12,14 +12,14 @@
       <div class="col">
         <input type="hidden" name="id" formControlName="id" >
         <mdb-form-control>
-          <input mdbInput type="text" id="nome" class="form-control" [class.is-invalid]="campoInvalido('nome')" required value="{{ produto?.nome }}" formControlName="nome" />
+          <input mdbInput type="text" id="nome" class="form-control" [class.is-invalid]="campoInvalido('nome')" required value="{{ produto?.name }}" formControlName="nome" />
           <label mdbLabel class="form-label" for="nome">Nome</label>
         </mdb-form-control>
         <div class="invalid-feedback">Nome é obrigatório</div>
       </div>
       <div class="col">
         <mdb-form-control>
-          <input mdbInput type="text" id="precoVenda" class="form-control" [class.is-invalid]="campoInvalido('precoVenda')" required value="{{ produto?.precoVenda }}" formControlName="precoVenda" />
+          <input mdbInput type="text" id="precoVenda" class="form-control" [class.is-invalid]="campoInvalido('precoVenda')" required value="{{ produto?.salePrice }}" formControlName="precoVenda" />
           <label mdbLabel class="form-label" for="precoVenda">Preço Venda</label>
         </mdb-form-control>
         <div class="invalid-feedback">Preço de venda é obrigatório</div>
