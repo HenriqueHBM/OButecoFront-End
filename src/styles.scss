@@ -8,6 +8,53 @@
   float: right;
 }
 
+// Select com rótulo fixo na borda, no mesmo visual dos inputs do MDB
+.campo-select {
+  position: relative;
+
+  > label {
+    position: absolute;
+    top: -0.6rem;
+    left: 0.55rem;
+    z-index: 1;
+    padding: 0 0.3rem;
+    font-size: 0.8rem;
+    line-height: 1.1rem;
+    color: #757575;
+    background: #fff;
+    pointer-events: none;
+    transition: color 0.2s;
+  }
+
+  > .form-select {
+    min-height: calc(2.08rem + 2px);
+    padding: 0.33rem 2.25rem 0.33rem 0.75rem;
+    font-size: 1rem;
+    color: #4f4f4f;
+    border: 1px solid #bdbdbd;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      border-color: #3b71ca;
+      box-shadow: inset 0 0 0 1px #3b71ca;
+    }
+
+    &.is-invalid {
+      border-color: #dc4c64;
+    }
+  }
+
+  &:focus-within > label {
+    color: #3b71ca;
+  }
+
+  &:has(.is-invalid) > label {
+    color: #dc4c64;
+  }
+}
+
 
 
   /*background-blend-mode: white, black;*/

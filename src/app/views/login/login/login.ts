@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
@@ -16,7 +16,9 @@ import { Auth } from '../../../models/auth/auth';
 export class Login {
   private loginService = inject(AuthService);
   private router = inject(Router);
-  private route = inject(ActivatedRoute); 
+  private route = inject(ActivatedRoute);
+
+  mostrarSenha = signal(false);
 
   myForm = inject(FormBuilder).nonNullable.group({
     usuario: ['', Validators.required],
