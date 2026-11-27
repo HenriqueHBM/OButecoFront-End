@@ -1,0 +1,10 @@
+// Menu no topo, conteúdo ocupa o espaço livre e o footer fica sempre no fim da tela
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.conteudo {
+  flex: 1 0 auto;
+}

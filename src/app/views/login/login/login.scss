@@ -1,18 +1,184 @@
-.login-container {
+$amarelo: #FFC40C;
+$creme: #FFF4CE;
+$escuro: #29251F;
+
+.login-page {
   min-height: 100vh;
-  padding: 10vh;
-  margin: 0;
-  background: linear-gradient(to right,#FFC40C 50%,#FFF4CE 50%);
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: linear-gradient(to right, $amarelo 50%, $creme 50%);
+  overflow: hidden;
 }
 
-.formulario {
+/* Lado esquerdo: marca */
+.login-marca {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 10%;
+  color: $escuro;
+
+  .marca-icone {
+    width: 4.5rem;
+    height: 4.5rem;
+    display: grid;
+    place-items: center;
+    margin-bottom: 1.5rem;
+    border-radius: 1.25rem;
+    background: $escuro;
+    color: $amarelo;
+    font-size: 2.2rem;
+    box-shadow: 0 10px 25px rgba(41, 37, 31, 0.25);
+  }
+
+  h1 {
+    margin: 0 0 0.75rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+
+  p {
+    max-width: 26rem;
+    margin: 0;
+    font-size: 1.15rem;
+    opacity: 0.8;
+  }
+}
+
+/* Lado direito: card de vidro */
+.login-area {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.forma {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* as formas só encostam nos cantos do card, para não ficar atrás do texto */
+.forma-escura {
+  width: 200px;
+  height: 200px;
+  top: calc(50% - 300px);
+  left: calc(50% - 320px);
+  background: $escuro;
+}
+
+.forma-amarela {
+  width: 220px;
+  height: 220px;
+  top: calc(50% + 100px);
+  left: calc(50% + 110px);
+  background: $amarelo;
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 400px;
+  padding: 2.75rem 2.25rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 20px 45px rgba(41, 37, 31, 0.18);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+
+  h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: $escuro;
+  }
+
+  .subtitulo {
+    margin: 0.4rem 0 2rem;
+    text-align: center;
+    color: rgba(41, 37, 31, 0.75);
+  }
 }
 
-.formulario button {
-  display: block;
-  margin: 3vh auto;
+.campo {
+  margin-bottom: 1.4rem;
 
+  .form-control {
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 0.6rem;
+  }
+
+  .erro {
+    display: block;
+    margin-top: 0.3rem;
+    color: #dc4c64;
+  }
+}
+
+/* espaço para o botão do olho não ficar em cima do texto */
+#senha {
+  padding-right: 2.75rem;
+}
+
+.btn-olho {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  z-index: 2;
+  transform: translateY(-50%);
+  padding: 0.25rem;
+  border: 0;
+  background: transparent;
+  color: rgba(41, 37, 31, 0.6);
+  cursor: pointer;
+
+  &:hover {
+    color: $escuro;
+  }
+}
+
+.btn-acessar {
+  margin-top: 0.5rem;
+  border-radius: 0.75rem;
+  background: $escuro;
+  letter-spacing: 1px;
+}
+
+/* Celular / tablet: um embaixo do outro */
+@media (max-width: 992px) {
+  .login-page {
+    grid-template-columns: 1fr;
+    background: linear-gradient(to bottom, $amarelo 40%, $creme 40%);
+  }
+
+  .login-marca {
+    align-items: center;
+    padding: 3rem 1.5rem 1rem;
+    text-align: center;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .forma-escura {
+    width: 150px;
+    height: 150px;
+    top: -30px;
+    left: -60px;
+  }
+
+  .forma-amarela {
+    width: 160px;
+    height: 160px;
+    top: auto;
+    bottom: -40px;
+    left: auto;
+    right: -50px;
+  }
 }

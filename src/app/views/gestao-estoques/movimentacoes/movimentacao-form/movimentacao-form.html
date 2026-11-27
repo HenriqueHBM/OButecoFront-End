@@ -1,8 +1,10 @@
 <form [formGroup]="myForm" (submit)="onSubmit($event)">
   <div class="row mb-4">
-    <div class="col">
-      <select class="form-control" [class.is-invalid]="campoInvalido('tipo')" required formControlName="tipo">
-        <option value="TIPO_ENTRADA" selected>Entrada</option>
+    <div class="col campo-select">
+      <label for="tipo">Tipo de movimentação</label>
+      <select id="tipo" class="form-select" [class.is-invalid]="campoInvalido('tipo')" required formControlName="tipo">
+        <option [ngValue]="null" disabled>Selecione o tipo</option>
+        <option value="TIPO_ENTRADA">Entrada</option>
         <option value="TIPO_SAIDA">Saída</option>
       </select>
       <div class="invalid-feedback">Tipo é obrigatório</div>
@@ -12,7 +14,9 @@
         <input mdbInput type="text" id="qtde" class="form-control" [class.is-invalid]="campoInvalido('qtde')" required formControlName="qtde" />
         <label mdbLabel class="form-label" for="qtde">Quantidade</label>
       </mdb-form-control>
-      <div class="invalid-feedback">Quantidade é obrigatória</div>
+      @if (campoInvalido('qtde')) {
+        <small class="text-danger">{{ erroNumero('qtde', 'Quantidade é obrigatória') }}</small>
+      }
     </div>
   </div>
   <div class="row mb-4">
@@ -29,10 +33,14 @@
         />
         <label mdbLabel class="form-label" for="valorUnitario">Val. Unitário</label>
       </mdb-form-control>
-      <div class="invalid-feedback">Valor unitário é obrigatório</div>
+      @if (campoInvalido('valorUnitario')) {
+        <small class="text-danger">{{ erroNumero('valorUnitario', 'Valor unitário é obrigatório') }}</small>
+      }
     </div>
-    <div class="col">
-      <select class="form-control" [class.is-invalid]="campoInvalido('fk_id_conversao')" required formControlName="fk_id_conversao">
+    <div class="col campo-select">
+      <label for="fk_id_conversao_mov">Unidade de medida</label>
+      <select id="fk_id_conversao_mov" class="form-select" [class.is-invalid]="campoInvalido('fk_id_conversao')" required formControlName="fk_id_conversao">
+        <option [ngValue]="null" disabled>Selecione a unidade</option>
         <option value="1">Quilograma</option>
         <option value="2">Grama</option>
       </select>
@@ -48,10 +56,14 @@
           type="text"
           id="taxaConversao"
           class="form-control"
+          [class.is-invalid]="campoInvalido('taxaConversao')"
           formControlName="taxaConversao"
         />
         <label mdbLabel class="form-label" for="taxaConversao">Conversão</label>
       </mdb-form-control>
+      @if (campoInvalido('taxaConversao')) {
+        <small class="text-danger">{{ erroNumero('taxaConversao', '') }}</small>
+      }
     </div>
     <!-- <div class="col">
       <mdb-form-control>

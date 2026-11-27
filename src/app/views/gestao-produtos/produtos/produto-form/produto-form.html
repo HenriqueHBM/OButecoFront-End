@@ -19,25 +19,29 @@
       </div>
       <div class="col">
         <mdb-form-control>
-          <input mdbInput type="text" id="precoVenda" class="form-control" [class.is-invalid]="campoInvalido('precoVenda')" required value="{{ produto?.salePrice }}" formControlName="precoVenda" />
+          <input mdbInput type="text" id="precoVenda" class="form-control" [class.is-invalid]="campoInvalido('precoVenda')" required formControlName="precoVenda" />
           <label mdbLabel class="form-label" for="precoVenda">Preço Venda</label>
         </mdb-form-control>
-        <div class="invalid-feedback">Preço de venda é obrigatório</div>
+        @if (campoInvalido('precoVenda')) {
+          <small class="text-danger">Informe um preço maior que zero (ex.: 12,50)</small>
+        }
       </div>
     </div>
     <div class="row mb-4">
-      <div class="col">
-      <select class="form-control" [class.is-invalid]="campoInvalido('categoriaEnum')" required formControlName="categoriaEnum" >
-          <option selected>Selecione uma opção</option>
+      <div class="col campo-select">
+        <label for="categoriaEnum">Categoria</label>
+        <select id="categoriaEnum" class="form-select" [class.is-invalid]="campoInvalido('categoriaEnum')" required formControlName="categoriaEnum" >
+          <option [ngValue]="null" disabled>Selecione a categoria</option>
           @for (item of categorias; track $index) {
             <option [value]="item">{{ categoriasLabels[item] }}</option>
           }
         </select>
         <div class="invalid-feedback">Categoria é obrigatória</div>
       </div>
-      <div class="col">
-        <select class="form-control" [class.is-invalid]="campoInvalido('grupoEnum')" required formControlName="grupoEnum" >
-          <option selected>Selecione uma opção</option>
+      <div class="col campo-select">
+        <label for="grupoEnum">Grupo</label>
+        <select id="grupoEnum" class="form-select" [class.is-invalid]="campoInvalido('grupoEnum')" required formControlName="grupoEnum" >
+          <option [ngValue]="null" disabled>Selecione o grupo</option>
           @for (item of grupos; track $index) {
             <option [value]="item">{{ gruposLabels[item] }}</option>
           }
@@ -45,6 +49,68 @@
         <div class="invalid-feedback">Grupo é obrigatório</div>
       </div>
     </div>
+
+    <!-- Ficha técnica: só para produtos da categoria "Produto/Insumos" -->
+    @if (ehProdutoComInsumos()) {
+      <div class="p-4 border rounded">
+        <div class="insumos-header">
+          <div>
+            <h6 class="mb-0"><i class="fa-solid fa-list-check me-2"></i>Insumos do produto</h6>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-primary" (click)="adicionarInsumo()"
+            [disabled]="listaInsumos().length === 0">
+            <i class="fa-solid fa-plus me-1"></i> Adicionar insumo
+          </button>
+        </div>
+
+        @if (listaInsumos().length === 0) {
+          <div class="insumos-vazio">
+            <i class="fa-solid fa-circle-info me-2"></i>
+            Nenhum produto ativo da categoria <strong>Insumo</strong>. Cadastre os insumos primeiro (ex.: queijo, massa).
+          </div>
+        } @else {
+          <div formArrayName="insumos">
+            @for (item of insumos.controls; track item; let i = $index) {
+              <div class="insumo-linha" [formGroupName]="i">
+                <div class="campo-select insumo-select">
+                  <label [for]="'insumo-' + i">Insumo</label>
+                  <select [id]="'insumo-' + i" class="form-select" formControlName="insumoId"
+                    [class.is-invalid]="insumoInvalido(i, 'insumoId')">
+                    <option [ngValue]="null" disabled>Selecione o insumo</option>
+                    @for (insumo of listaInsumos(); track insumo.id) {
+                      <option [ngValue]="insumo.id">{{ insumo.name }}</option>
+                    }
+                  </select>
+                  <div class="invalid-feedback">Escolha o insumo</div>
+                </div>
+
+                <div class="insumo-qtde">
+                  <mdb-form-control>
+                    <input mdbInput type="number" step="0.01" min="0.01" [id]="'qtde-' + i" class="form-control"
+                      [class.is-invalid]="insumoInvalido(i, 'qtde')" formControlName="qtde" />
+                    <label mdbLabel class="form-label" [for]="'qtde-' + i">Quantidade</label>
+                  </mdb-form-control>
+                  @if (insumoInvalido(i, 'qtde')) {
+                    <small class="text-danger">Informe uma quantidade maior que zero</small>
+                  }
+                </div>
+
+                <button type="button" class="btn btn-link text-danger btn-remover" title="Remover insumo"
+                  (click)="removerInsumo(i)">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            }
+          </div>
+        }
+
+        @if (erroInsumos()) {
+          <div class="text-danger small mt-1">
+            <i class="fa-solid fa-triangle-exclamation me-1"></i>{{ erroInsumos() }}
+          </div>
+        }
+      </div>
+    }
   </div>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-secondary" (click)="modalRef.close()">fechar</button>

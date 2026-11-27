@@ -1,37 +1,69 @@
-<div class="row login-container">
-  <div class="col-lg-8 texto">
-    <h1>O buteco</h1>
-  </div>
-  <div class="col-lg-4 formulario-container">
-    <form [formGroup]="myForm" (submit)="logar($event)">
-      <div class="formulario">
-        <mdb-form-control>
-          <input
-            mdbInput
-            type="text"
-            id="usuario"
-            class="form-control"
-            formControlName="usuario"
-          />
-          <label mdbLabel class="form-label" for="usuario">Usuário</label>
-        </mdb-form-control>
-        <br />
+<div class="login-page">
+  <section class="login-marca">
+    <div class="marca-icone">
+      <i class="fa-solid fa-beer-mug-empty"></i>
+    </div>
+    <h1>O Buteco</h1>
+  </section>
 
-        <mdb-form-control>
-          <input
-            mdbInput
-            type="password"
-            id="senha"
-            class="form-control"
-            formControlName="senha"
-          />
-          <label mdbLabel class="form-label" for="senha">Senha</label>
-        </mdb-form-control>
+  <section class="login-area">
+    <!-- formas atrás do card: são elas que aparecem desfocadas pelo vidro -->
+    <span class="forma forma-escura"></span>
+    <span class="forma forma-amarela"></span>
 
-        <button type="submit" class="btn btn-dark btn-rounded">
-          ACESSAR
+    <div class="login-card">
+      <h2>Login</h2>
+      <br>
+
+      <form [formGroup]="myForm" (submit)="logar($event)" novalidate>
+        <div class="campo">
+          <mdb-form-control>
+            <input
+              mdbInput
+              type="text"
+              id="usuario"
+              class="form-control form-control-lg"
+              [class.is-invalid]="campoInvalido('usuario')"
+              formControlName="usuario"
+              autocomplete="username"
+            />
+            <label mdbLabel class="form-label" for="usuario">Usuário</label>
+          </mdb-form-control>
+          @if (campoInvalido('usuario')) {
+            <small class="erro">Informe o usuário</small>
+          }
+        </div>
+
+        <div class="campo">
+          <mdb-form-control>
+            <input
+              mdbInput
+              [type]="mostrarSenha() ? 'text' : 'password'"
+              id="senha"
+              class="form-control form-control-lg"
+              [class.is-invalid]="campoInvalido('senha')"
+              formControlName="senha"
+              autocomplete="current-password"
+            />
+            <label mdbLabel class="form-label" for="senha">Senha</label>
+            <button
+              type="button"
+              class="btn-olho"
+              (click)="mostrarSenha.set(!mostrarSenha())"
+              [attr.aria-label]="mostrarSenha() ? 'Ocultar senha' : 'Mostrar senha'"
+            >
+              <i class="fa-regular" [class.fa-eye]="!mostrarSenha()" [class.fa-eye-slash]="mostrarSenha()"></i>
+            </button>
+          </mdb-form-control>
+          @if (campoInvalido('senha')) {
+            <small class="erro">Informe a senha</small>
+          }
+        </div>
+
+        <button type="submit" class="btn btn-dark btn-lg btn-block btn-acessar">
+          Acessar
         </button>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
+  </section>
 </div>

@@ -7,6 +7,7 @@ import { ProdutoService } from '../../../../services/gestao-produtos/produto-ser
 import { Produto } from '../../../../models/gestao-produtos/produto';
 import { EstoqueRequest } from '../../../../models/gestao-estoque/estoque';
 import Swal from 'sweetalert2';
+import { numeroPositivo, paraNumero } from '../../../../utils/numero';
 
 @Component({
   selector: 'app-estoque-form',
@@ -29,7 +30,7 @@ export class EstoqueForm implements OnInit {
   ngOnInit(): void {
     this.myForm = this.fb.group({
       fk_id_produto: [null, Validators.required],
-      qtdeEstoque: [null, [Validators.required, Validators.min(0.01)]],
+      qtdeEstoque: [null, [Validators.required, numeroPositivo()]],
       fk_id_conversao: [null, Validators.required],
       local: []
     });
@@ -65,7 +66,11 @@ export class EstoqueForm implements OnInit {
       return;
     }
 
-    const estoque: EstoqueRequest = this.myForm.value;
+    // converte "2,20" -> 2.2 antes de enviar (o back espera número no JSON)
+    const estoque: EstoqueRequest = {
+      ...this.myForm.value,
+      qtdeEstoque: paraNumero(this.myForm.value.qtdeEstoque)
+    };
 
     this.estoqueService.save(estoque).subscribe({
       next: () => {

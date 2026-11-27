@@ -6,6 +6,8 @@ import { Estoque } from '../../../../models/gestao-estoque/estoque';
 import { EstoqueService } from '../../../../services/gestao-estoques/estoque-service';
 import { MovimentacaoService } from '../../../../services/gestao-estoques/movimentacao-service';
 import Swal from 'sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
+import { numeroPositivo, numeroValido, paraNumero } from '../../../../utils/numero';
 
 @Component({
   selector: 'app-movimentacao-form',
@@ -56,10 +58,10 @@ export class MovimentacaoForm implements OnInit {
       local: [this.estoque().local, Validators.required],
       fk_id_estoque: [this.estoque().id, Validators.required],
       tipo: [null, Validators.required],
-      qtde: [null, Validators.required],
-      valorUnitario: [null, Validators.required],
+      qtde: [null, [Validators.required, numeroPositivo()]],
+      valorUnitario: [null, [Validators.required, numeroPositivo()]],
       fk_id_conversao: [null, Validators.required],
-      taxaConversao: [],
+      taxaConversao: [null, numeroValido()],
       observacao: []
     });
 
@@ -71,6 +73,25 @@ export class MovimentacaoForm implements OnInit {
     return !!controle && controle.invalid && controle.touched;
   }
 
+  // mensagem para campos numéricos (aceitam vírgula: 2,20)
+  erroNumero(campo: string, msgObrigatorio: string): string {
+    const erros = this.myForm.get(campo)?.errors;
+    if (erros?.['required']) return msgObrigatorio;
+    if (erros?.['numero']) return 'Digite um número válido, ex.: 2,20';
+    if (erros?.['positivo']) return 'Deve ser maior que zero';
+    return '';
+  }
+
+  private mostrarErro(erro: HttpErrorResponse) {
+    if (erro.status === 401 || erro.status === 403) return;
+    const mensagemBack = typeof erro.error === 'string' && erro.error.length < 200 ? erro.error : '';
+    Swal.fire({
+      icon: "info",
+      title: "Erro ao salvar",
+      text: mensagemBack || "Parece que não foi possível salvar a movimentação"
+    });
+  }
+
   onSubmit(e: Event) {
     e.preventDefault();
 
@@ -79,7 +100,14 @@ export class MovimentacaoForm implements OnInit {
       return;
     }
 
-    const movimentacao: MovimentacaoRequest = this.myForm.value;
+    // converte "2,20" -> 2.2 antes de enviar (o back espera número no JSON)
+    const valor = this.myForm.value;
+    const movimentacao: MovimentacaoRequest = {
+      ...valor,
+      qtde: paraNumero(valor.qtde),
+      valorUnitario: paraNumero(valor.valorUnitario),
+      taxaConversao: paraNumero(valor.taxaConversao)
+    };
 
     if (movimentacao.tipo == 'TIPO_ENTRADA') {
       this.movimentacaoService.saveEntrada(movimentacao).subscribe({
@@ -90,13 +118,7 @@ export class MovimentacaoForm implements OnInit {
           });
           this.retorno.emit(movimentacao);
         },
-        error: erro => {
-          Swal.fire({
-            icon: "info",
-            title: "Erro ao salvar",
-            text: "Parece que não foi possível salvar a movimentação"
-          });
-        }
+        error: (erro: HttpErrorResponse) => this.mostrarErro(erro)
       });
     } else {
       this.movimentacaoService.saveSaida(movimentacao).subscribe({
@@ -107,13 +129,7 @@ export class MovimentacaoForm implements OnInit {
           });
           this.retorno.emit(movimentacao);
         },
-        error: erro => {
-          Swal.fire({
-            icon: "info",
-            title: "Erro ao salvar",
-            text: "Parece que não foi possível salvar a movimentação"
-          });
-        }
+        error: (erro: HttpErrorResponse) => this.mostrarErro(erro)
       });
     }
 
