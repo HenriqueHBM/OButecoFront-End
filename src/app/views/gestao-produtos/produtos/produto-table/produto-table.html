@@ -44,7 +44,13 @@
             @if (podeEditar()) {
                 <td class="text-end ">
                     <div class="d-flex align-items-center justify-content-end">
-                        
+
+                        @if (prod.categoryEnum === 'PRODUTO_INSUMOS') {
+                            <button type="button" class="btn text-primary shadow-0" title="Ver insumos" (click)="insumos.emit(prod)">
+                                <i class="fa-solid fa-list-check fa-lg"></i>
+                            </button>
+                        }
+
                         <button type="button" class="btn text-warning shadow-0" (click)="editar.emit(prod)">
                             <i class="fa-solid fa-pencil fa-xl"></i>
                         </button>
@@ -57,10 +63,6 @@
                         <button type="button" class="btn text-danger shadow-0" (click)="excluir.emit(prod)">
                             <i class="fa-solid fa-trash-can" ></i>
                         </button>
-
-                        <!-- <button type="button" class="btn shadow-0" (click)="insumos.emit(prod)">
-                            <i class="fa-solid fa-angle-down"></i>
-                        </button> -->
                     </div>
                 </td>
             }    

@@ -9,16 +9,18 @@
 
   <div class="modal-body">
     <div class="row mb-4">
-      <div class="col">
+      <div class="col campo-select">
+        <label for="fk_id_produto">Produto</label>
         <select
-          class="form-control"
+          id="fk_id_produto"
+          class="form-select"
           [class.is-invalid]="campoInvalido('fk_id_produto')"
           required
           formControlName="fk_id_produto"
         >
-          <option selected>Selecione uma opção</option>
+          <option [ngValue]="null" disabled>Selecione um produto</option>
           @for (produto of list_produtos; track produto.id) {
-            <option [value]="produto.id">{{ produto.name }}</option>
+            <option [ngValue]="produto.id">{{ produto.name }}</option>
           }
         </select>
         <div class="invalid-feedback">Produto é obrigatório</div>
@@ -36,17 +38,22 @@
           />
           <label mdbLabel class="form-label" for="qtdeEstoque">Quantidade</label>
         </mdb-form-control>
-        <div class="invalid-feedback">Quantidade é obrigatória e deve ser maior que zero</div>
+        @if (campoInvalido('qtdeEstoque')) {
+          <small class="text-danger">Informe uma quantidade maior que zero (ex.: 2,20)</small>
+        }
       </div>
     </div>
     <div class="row mb-4">
-      <div class="col">
+      <div class="col campo-select">
+        <label for="fk_id_conversao">Unidade de medida</label>
         <select
-          class="form-control"
+          id="fk_id_conversao"
+          class="form-select"
           [class.is-invalid]="campoInvalido('fk_id_conversao')"
           required
           formControlName="fk_id_conversao"
         >
+          <option [ngValue]="null" disabled>Selecione a unidade</option>
           <option value="1">Quilograma</option>
           <option value="2">Grama</option>
         </select>

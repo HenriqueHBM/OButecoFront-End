@@ -144,6 +144,20 @@ export class Produtos {
   }
 
   showInsumos(produto: Produto) {
+    const insumos = produto.insumos ?? [];
+    // escapa os nomes antes de montar o HTML do alerta
+    const escapar = (texto: string) => texto.replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
 
+    const linhas = insumos
+      .map(i => `<tr><td style="text-align:left">${escapar(i.nomeInsumo)}</td><td style="text-align:right">${i.qtde}</td></tr>`)
+      .join('');
+
+    Swal.fire({
+      icon: 'info',
+      title: `Insumos de ${escapar(produto.name)}`,
+      html: insumos.length
+        ? `<table class="table table-sm mb-0"><thead><tr><th style="text-align:left">Insumo</th><th style="text-align:right">Qtde</th></tr></thead><tbody>${linhas}</tbody></table>`
+        : 'Este produto ainda não tem insumos cadastrados.'
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Produto } from '../../models/gestao-produtos/produto';
+import { Produto, ProdutoRequest } from '../../models/gestao-produtos/produto';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class ProdutoService {
     return this.http.get<Produto>(`${this.API}/${id}`);
   }
 
-  save(produto: Produto): Observable<string> {
+  save(produto: ProdutoRequest): Observable<string> {
     return this.http.post<string>(`${this.API}`, produto, { responseType: 'text' as 'json' });
   }
 
@@ -33,7 +33,7 @@ export class ProdutoService {
     return this.http.patch<string>(`${this.API}/change_status/${id}`,null);
   }
 
-  updateProduto(produto: Produto): Observable<string>{
+  updateProduto(produto: ProdutoRequest): Observable<string>{
     return this.http.put<string>(`${this.API}/${produto.id}`, produto, { responseType: 'text' as 'json' });
   }
 

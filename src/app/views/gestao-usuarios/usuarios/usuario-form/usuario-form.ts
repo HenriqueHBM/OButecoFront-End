@@ -39,7 +39,7 @@ export class UsuarioForm implements OnInit {
     this.myForm = this.fb.group({
       id: [this.usuario?.id],
       nome: [this.usuario?.name, Validators.required],
-      cargoEnum: [this.usuario?.role, Validators.required],
+      cargoEnum: [this.usuario?.role ?? null, Validators.required],
       usuario: [this.usuario?.user, Validators.required],
       senha: [null, this.isEditar() ? [] : [Validators.required,  Validators.minLength(6)]]
     });
