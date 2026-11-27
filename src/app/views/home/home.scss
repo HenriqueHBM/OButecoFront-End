@@ -1,7 +1,9 @@
+
 .home-container {
-  min-height: 100vh;
-  background: #FFF4CE 50%;
-  // display: flex;
+  min-height: calc(100vh - 140px);
+  background: #FFF4CE;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
@@ -12,10 +14,42 @@
 .home-card {
   display: block;
   border-radius: 15px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.30s ease, box-shadow 0.15s ease;
   padding: 2.5rem 1rem;
 }
 
 .home-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 }
+
+.home-card .card {
+  height: 45vh;
+  border-radius: 15px;
+}
+
+
+.home-card .card-header {
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-card .card-header i {
+  font-size: 6rem !important;
+}
+
+.home-card .card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.home-card .card-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+

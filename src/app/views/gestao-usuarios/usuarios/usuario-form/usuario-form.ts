@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { Usuario } from '../../../../models/gestao-usuarios/usuario';
+import { Usuario, UsuarioRequest } from '../../../../models/gestao-usuarios/usuario';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../../services/gestao_usuarios/usuario-service';
 import { CARGOS_LABELS, CargosEnum } from '../../../../Enums/cargos-enum';
@@ -38,10 +38,10 @@ export class UsuarioForm implements OnInit {
   ngOnInit(): void {
     this.myForm = this.fb.group({
       id: [this.usuario?.id],
-      nome: [this.usuario?.nome, Validators.required],
-      cargoEnum: [this.usuario?.cargoEnum, Validators.required],
-      usuario: [this.usuario?.usuario, Validators.required],
-      senha: [null]
+      nome: [this.usuario?.name, Validators.required],
+      cargoEnum: [this.usuario?.role, Validators.required],
+      usuario: [this.usuario?.user, Validators.required],
+      senha: [null, this.isEditar() ? [] : [Validators.required,  Validators.minLength(6)]]
     });
   }
 
@@ -58,36 +58,16 @@ export class UsuarioForm implements OnInit {
       return;
     }
 
-    const usuario: Usuario = this.myForm.value;
+    const usuario: UsuarioRequest = this.myForm.value;
+    const requisicao = usuario.id == null ? this.usuarioService.save(usuario) : this.usuarioService.updateUsuario(usuario);
 
-    // Cadastrar
-    if(usuario.id == null){
-      this.usuarioService.save(usuario).subscribe({
-        next: sucesso => {
-         Swal.fire({
-            icon: "success",
-            title: "Sucesso ao salvar"
-          })
-
-        },
-        error: erro =>{
-          Swal.fire({
-            icon: "info",
-            title: "Erro ao salvar",
-            text: "Parece que não foi possível salvar as informações de usuário"
-          });
-
-        }
-      });
-
-      // Editar
-    }else{
-      this.usuarioService.updateUsuario(usuario).subscribe({
-        next: sucesso => {
+      requisicao.subscribe({
+        next: () => {
           Swal.fire({
             icon: "success",
             title: "Sucesso ao salvar"
           });
+          this.modalRef.close();
         },
         error: erro =>{
           Swal.fire({
@@ -97,8 +77,5 @@ export class UsuarioForm implements OnInit {
           });
         }
       });
-    }
-
-    this.modalRef.close();
   }
 }

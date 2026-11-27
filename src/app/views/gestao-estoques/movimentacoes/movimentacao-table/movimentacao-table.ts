@@ -44,6 +44,7 @@ export class MovimentacaoTable {
       },
       // qualquer erro no banco retorna aqui
       error: erro => {
+        if (erro.status === 401 || erro.status === 403) return;
         Swal.fire({
           icon: "error",
           title: "Conexão com o Banco",

@@ -3,6 +3,8 @@ import { Estoque } from '../../../../models/gestao-estoque/estoque';
 import { StatusEnum } from '../../../../Enums/status-enum';
 import { MovimentacaoTable } from '../../movimentacoes/movimentacao-table/movimentacao-table';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { AuthService } from '../../../../services/auth/auth-service';
+import { CargosEnum } from '../../../../Enums/cargos-enum';
 
 @Component({
   selector: 'app-estoque-table',
@@ -11,6 +13,8 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
   styleUrl: './estoque-table.scss',
 })
 export class EstoqueTable {
+  protected auth = inject(AuthService);
+  protected readonly cargos = CargosEnum;
   protected readonly status = StatusEnum;
   // modalRef: MdbModalRef<any> | null = null;
 
