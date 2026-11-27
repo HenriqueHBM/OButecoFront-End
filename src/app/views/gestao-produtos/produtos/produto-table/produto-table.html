@@ -24,10 +24,10 @@
     @for (prod of produtos(); track $index) {
         <tr>
             <td>{{ prod.id }}</td>
-            <td>{{ prod.nome }}</td>
-            <td>{{ prod.precoVenda ? `R$: ${prod.precoVenda}`: "" }}</td>
-            <td>{{ prod.categoriaEnum }}</td>
-            <td>{{ prod.grupoEnum }}</td>
+            <td>{{ prod.name }}</td>
+            <td>{{ prod.salePrice ? `R$: ${prod.salePrice}`: "" }}</td>
+            <td>{{ prod.categoryEnum }}</td>
+            <td>{{ prod.groupEnum }}</td>
             <td>
                 @if(prod.status == status.ATIVO){
                     <span class="badge badge-success rounded-pill p-2 px-3">
@@ -40,7 +40,7 @@
                     </span>
                 }
             </td>
-            <td>{{ formatarData(prod.created_at) }}</td>
+            <td>{{ formatarData(prod.creationDate) }}</td>
             @if (podeEditar()) {
                 <td class="text-end ">
                     <div class="d-flex align-items-center justify-content-end">

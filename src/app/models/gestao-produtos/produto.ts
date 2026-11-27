@@ -4,13 +4,13 @@ import { StatusEnum } from "../../Enums/status-enum";
 
 export class Produto {
     id !: number;
-    nome !: string;
+    name !: string;
     status !: StatusEnum;
-    categoriaEnum !: CategoriaEnum;
-    grupoEnum !: GrupoEnum;
-    precoVenda !: number;
-    observacao !: string;
-    created_at !: string;
-    updated_at !: string;
-    deleted_at !:string;
+    categoryEnum !: CategoriaEnum;
+    groupEnum !: GrupoEnum;
+    salePrice !: number;
+    observation !: string;
+    creationDate !: string;
+    updateDate !: string;
+    deletedDate !:string;
 }
