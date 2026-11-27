@@ -38,11 +38,11 @@ export class ProdutoForm implements OnInit {
   ngOnInit(): void {
     this.myForm = this.fb.group({
       id: [this.produto?.id,],
-      nome: [this.produto?.nome, Validators.required],
-      categoriaEnum: [this.produto?.categoriaEnum, Validators.required],
-      grupoEnum: [this.produto?.grupoEnum, Validators.required],
-      precoVenda: [this.produto?.precoVenda, Validators.required],
-      observacao: [this.produto?.observacao],
+      nome: [this.produto?.name, Validators.required],
+      categoriaEnum: [this.produto?.categoryEnum, Validators.required],
+      grupoEnum: [this.produto?.groupEnum, Validators.required],
+      precoVenda: [this.produto?.salePrice, Validators.required],
+      observacao: [this.produto?.observation],
       // insumos: [[]]
     });
   }

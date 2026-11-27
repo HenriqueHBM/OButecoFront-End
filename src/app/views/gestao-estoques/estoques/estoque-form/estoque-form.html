@@ -18,7 +18,7 @@
         >
           <option selected>Selecione uma opção</option>
           @for (produto of list_produtos; track produto.id) {
-            <option [value]="produto.id">{{ produto.nome }}</option>
+            <option [value]="produto.id">{{ produto.name }}</option>
           }
         </select>
         <div class="invalid-feedback">Produto é obrigatório</div>
